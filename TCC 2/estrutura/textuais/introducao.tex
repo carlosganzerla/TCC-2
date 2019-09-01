@@ -1,0 +1,47 @@
+% INTRODUÇÃO-------------------------------------------------------------------
+%\clearpage
+\setcounter{page}{11}
+
+\chapter{INTRODUÇÃO}
+\label{chap:introducao}
+
+
+O forno microondas, também conhecido apenas como microondas, é um forno elétrico que aquece e cozinha alimentos pela exposição à radiação eletromagnética na faixa de frequência das microondas (MO), cerca de 2450 MHz. O forno microondas é um eletrodoméstico relativamente pequeno, em forma de caixa, que aumenta a temperatura dos alimentos através de um campo eletromagnético \cite{MicrowaveBritannica}. 
+
+A radiação eletromagnética é absorvida pela matéria de maneiras diferentes dependendo do comprimento de onda e do estado da matérias (gasoso, líquido ou sólido). Átomos livres e moléculas geralmente absorvem ultravioleta pela excitação de elétrons, enquanto que no caso da radiação infravermelha, a excitação de vibrações ou rotações moleculares é predominante. Rotações livres e sem perturbações não podem ocorrer na água em seu estado líquido devido às interações com as moléculas vizinhas,  entretanto outros líquidos e sólidos podem absorver as microondas devido a polarização induzida pelo campo elétrico oscilante. No caso do forno microondas, as moléculas dipolares da água contida nos alimentos absorvem a maior parte da energia eletromagnética. \cite{Vollmer}.
+
+A interação complexa das MO com os alimentos, os quais caracterizam um meio com perdas, causa uma não uniformidade no aquecimento, gerando partes quentes e frias nos alimentos. Devido ao fato de que a duração do processo de aquecimento é curta, não há tempo para haver a difusão térmica entre as partes com diferentes temperaturas \cite{Ma}. Assim, o aquecimento por microondas é rápido e conveniente, porém altamente não uniforme. Quando um alimento possui partes cruas ou parcialmente cozidas, esta não uniformidade no aquecimento pode resultar em um cozimento inadequado, fazendo com que o alimento não esteja seguro contra microorganismos que podem causar doenças \cite{Pitchai2011}. Atualmente, a maioria dos fornos de microondas utiliza uma unidade ferro-ressonante para acionar o magnetron. Este tipo de circuito tem uma potência de saída constante e incontrolável, e que consome uma grande quantidade de energia \cite{Hidenori1991}.
+
+ Assim, o objetivo deste trabalho é o desenvolvimento de um circuito para controlar a potência de saída do magnetron, e que possa ser integrado a um forno microondas convencional. Em \cite{Hidenori1991}, um circuito de controle para a potência do magnetron é apresentado, demonstrando-se as vantagens desse circuito em relação às fontes de alimentação tradicionais. Neste trabalho, o circuito desenvolvido objetivará uma redução maior no consumo de energia, e também uma melhora na uniformidade do aquecimento dos alimentos.
+
+
+\section{OBJETIVOS}
+\label{sec:objetivos}
+
+
+\subsection{Objetivo geral}
+\label{sec:objetivosGerais}
+
+O objetivo geral deste projeto é desenvolver um circuito de controle de potência para fornos de microondas, reduzindo o tamanho, peso, custo e consumo de energia do forno microondas. Com melhorias como aquecer o alimento de maneira mais uniforme, através da variação da potência de saída do magnetron, e um menor impacto na rede elétrica, já que uma fonte chaveada pode apresentar fator de potência mais elevado.
+
+\subsection{Objetivos específicos}
+\label{sec:objetivosEspecificos}
+
+\begin{itemize}
+    \item Desenvolver uma solução de  firmware que seja capaz de realizar o controle de potência do forno microondas através da temperatura. 
+    \item Desenvolver um circuito de controle que seja capaz de executar as ações de controle determinadas pelo microcontrolador da solução de firmware em tempo real, de modo que faça a comunicação entre os componentes de baixa potência com os componentes de alta potência, garantindo integridade do circuito e do usuário. 
+    \item Realizar simulações do circuito de controle, de modo a encotrar a solução mais eficaz para controlar a potência de saída do magnetron
+    \item Desenvolver um circuito inversor para controlar a tensão de entrada do magnetron, de modo que varie a potência de saída,variando conforme demanda do magnetron e decisões do firmware.
+    \item Dimensionar a solução conjunta de firmware e circuito de controle de maneira que este conjunto possa ser integrado a um forno microondas convencional.
+
+\end{itemize}
+
+
+\section{JUSTIFICATIVA}
+\label{sec:justificativa}
+
+A utilização de fornos microondas para fins de aquecimento é feita desde o fim da segunda guerra mundial. O consumo de produtos congelados feitos para aquecimento no microondas de tornou popular a partir da década de 1990, reduzindo drásticamente o tempo de cozimento em relação aos métodos tradicionais de aquecimento \cite{Ohlsson}. A vantagem do microondas é seu aquecimento rápido e volumétrico. Porém, a grande desvantagem é o aquecimento não uniforme. A interação complexa das microondas com as propriedades do alimento gera aquecimento desuniforme, o que pode afetar não só a segurança do alimento, mas também a qualidade \cite{Ma}.
+
+A solução proposta pelo projeto dará foco à uma solução que permita o controle da potência utilizada pelo forno microondas para aquecer o alimento de maneira mais uniforme, fazendo com que a energia seja fornecida de maneira inteligente, reduzindo o consumo total. O controle de potência também possibilitará o cozimento mais rápido de alguns alimentos, diminuindo assim também o custo energético.
+
+O circuito será desenvolvido de modo a ter um tamanho reduzido em relação aos circuitos tradicionais com acionadores ferro-ressonantes. Desta maneira, além do controle de potência, a solução irá providenciar a mesma funcionalidade do circuito tradicional com tamanho e peso reduzidos, podendo otimizar a maneira na qual o design do forno microondas é feito, e impactando diretamente no seu custo, tanto energético quanto financeiro.

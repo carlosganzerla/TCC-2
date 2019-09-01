@@ -1,0 +1,47 @@
+\providecommand{\abntreprintinfo}[1]{%
+ \citeonline{#1}}
+\setlength{\labelsep}{0pt}\begin{thebibliography}{}
+\providecommand{\abntrefinfo}[3]{}
+\providecommand{\abntbstabout}[1]{}
+\abntbstabout{v-1.9.7 }
+
+\bibitem[Britannica 1998]{MicrowaveBritannica}
+\abntrefinfo{Britannica}{BRITANNICA}{1998}
+{BRITANNICA, E. \textbf{Microwave oven}. 1998.
+Dispon{\'\i}vel em: \url{https://www.britannica.com/technology/microwave-oven}.
+  Acesso em: 02 de fevereiro de 2019.}
+
+\bibitem[Kako, Nakagawa e Narita 1991]{Hidenori1991}
+\abntrefinfo{Kako, Nakagawa e Narita}{KAKO; NAKAGAWA; NARITA}{1991}
+{KAKO, H.; NAKAGAWA, T.; NARITA, R. Development of compact inverter power
+  supply for microwave oven.
+\textbf{IEEE Transactions on Consumer Electronics}, v.~37, n.~3, p. 611--616,
+  1991.}
+
+\bibitem[Ma et al. 1995]{Ma}
+\abntrefinfo{Ma et al.}{MA et al.}{1995}
+{MA, L. et al. Experimental validation of a combined electromagnetic and
+  thermal fdtd model of a microwave heating process.
+\textbf{IEEE Transactions on Microwave Theory and Techniques}, v.~43, n.~11, p.
+  2565--2572, 1995.}
+
+\bibitem[Ohlsson 1983]{Ohlsson}
+\abntrefinfo{Ohlsson}{OHLSSON}{1983}
+{OHLSSON, T. Fundamentals of microwave cooking.
+\textbf{Microwave world}, v.~2, n.~4, p.~4--9, 1983.}
+
+\bibitem[Pitchai 2011]{Pitchai2011}
+\abntrefinfo{Pitchai}{PITCHAI}{2011}
+{PITCHAI, K.
+\textbf{Electromagnetic and Heat Transfer Modeling of Microwave Heating in
+  Domestic Ovens}.
+Abril 2011. 179~f. Disserta\c{c}\~{a}o (Dissertations, Theses and Student
+  Research in Food) --- University of Nebraska, Science and Technology
+  Department, 2011.}
+
+\bibitem[Vollmer 2004]{Vollmer}
+\abntrefinfo{Vollmer}{VOLLMER}{2004}
+{VOLLMER, M. Physics of the microwave oven.
+\textbf{Physics Education}, v.~39, n.~1, p. 74--81, 2004.}
+
+\end{thebibliography}

@@ -1,0 +1,75 @@
+% RESULTADOS-------------------------------------------------------------------
+
+\chapter{APRESENTAÇÃO E ANÁLISE DE RESULTADOS}
+
+Aqui será explicado, de modo interativo, o processo básico de funcionamento do sistema e também como um usuário comum o utilizaria para monitorar seus bens no dia-a-dia. O fluxo de atividades mais normal começaria pelo recebimento de um \textit{SMS} avisando o usuário sobre alguma atividade no perímetro da câmera, conforme figura \ref{fig:figura-sms}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{./dados/figuras/sms}
+    \caption{Mensagem de texto recebida pelo usuário após a detecção de atividade}
+    \fonte{Autoria própria (2017)}
+    \label{fig:figura-sms}
+\end{figure}
+
+O sistema unificado funciona sempre levando em conta quem são os usuários registrados para cada câmera. Alguém que não possua a autorização de acesso à uma câmera, não conseguirá vê-la no \textit{website} e também não receberá notificações sobre ela. Após tal evento, o usuário se sentirá inclinado a acessar o sistema pelo \textit{website} e verificar que tipo de evento foi esse. Para realizar essa verificação, primeiramente ele precisa fazer \textit{login}, conforme figura \ref{fig:figura-login}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{./dados/figuras/telalogin}
+    \caption{Tela de login do usuário no sistema}
+    \fonte{Autoria própria (2017)}
+    \label{fig:figura-login}
+\end{figure}
+
+Após fazer o \textit{login} no sistema, o usuário é redirecionado à sua tela inicial dentro do \textit{site}, onde ele pode verificar os últimos eventos registrados para suas câmeras, conforme figura \ref{fig:figura-telasite}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{./dados/figuras/telainicialsite}
+    \caption{Tela inicial do usuário no sistema}
+    \fonte{Autoria própria (2017)}
+    \label{fig:figura-telasite}
+\end{figure}
+
+O usuário pode verificar o evento que gerou a notificação em seu celular ao acessar a seção de ``Eventos'' dentro do site. Nesta página, o sistema mostra imagens do momento em que a pessoa foi interceptada pela filmagem. Abaixo de cada imagem pode-se observar o grau de confiança com que o sistema acredita que o objeto se movendo no vídeo seja uma pessoa, conforme figura \ref{fig:figura-telaeventos1}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{./dados/figuras/eventos1}
+    \caption{Tela de eventos do sistema}
+    \fonte{Autoria própria (2017)}
+    \label{fig:figura-telaeventos1}
+\end{figure}
+
+Caso o usuário clique na imagem em questão, o servidor fará uma requisição de \textit{download} do vídeo para a \textit{Raspberry Pi} ligada à câmera utilizada para filmar o vídeo. Quando o \textit{download} for concluído, o vídeo do evento é reproduzido automaticamente pelo sistema, conforme figura \ref{fig:figura-videoevento}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{./dados/figuras/videoevento}
+    \caption{Execução de vídeo de evento gerado}
+    \fonte{Autoria própria (2017)}
+    \label{fig:figura-videoevento}
+\end{figure}
+
+Assim, sabendo exatamente o que houve em sua área protegida pelas câmeras do sistema, o usuário pode tomar quaisquer medidas que ache viável para cada situação.
+
+Existe uma segunda possibilidade de uso do sistema, que se dá pelo acesso ao \textit{link} ao vivo da câmera selecionada. Para isso, o usuário precisa apenas clicar no botão ``Ao vivo'' no painel esquerdo do sistema. Na tela ao vivo, o usuário pode monitorar a qualquer momento o que se passa na frente de uma câmera, conforme figura \ref{fig:figura-cameravivo}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{./dados/figuras/cameravivo}
+    \caption{Utilizando o modo ``Ao vivo'' no sistema}
+    \fonte{Autoria própria (2017)}
+    \label{fig:figura-cameravivo}
+\end{figure}
+
+Na tela da cerca virtual o usuário pode desenhar com polígonos a região a ser monitorada, e só receberá alertas caso haja detecção de dentro da região escolhida. A imagem de fundo é uma \textit{snapshot} tirada no momento do acesso à página para servir como referência, conforme figura \ref{fig:figura-cercavirtual}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{./dados/figuras/cerca_virtual_site}
+    \caption{Utilizando o modo ``Cerca Virtual'' no sistema}
+    \fonte{Autoria própria (2017)}
+    \label{fig:figura-cercavirtual}
+\end{figure}
