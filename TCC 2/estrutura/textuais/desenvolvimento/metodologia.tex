@@ -51,25 +51,24 @@ Na figura \ref{fig:figura-graf_sim_1}, pode-se ver que o pico de tensão da carg
 \section{DSPIC33E}
 \label{sec:dsPIC}
 
-O DSPIC33E é um microntrolador da família PIC, desenvolvido pela Microchip Technology Inc., que possui suporta a fucnionalidade de processador digital de sinais (DSP). Este componente foi escolhido para fazer o controle do chaveamento da fonte inversora pois o mesmo consegue operar em uma ampla faixa de temperatura e possui diversas funcionalidades interessantes para o controle de sinais analógicos de alta frequência. Algumas das funcionalidades, cruciais para o projeto, incluem:
+O DSPIC33E é um microntrolador da família PIC, desenvolvido pela Microchip Technology Inc., que possui funcionalidade de processador digital de sinais (DSP). Este componente foi escolhido para fazer o controle do chaveamento da fonte inversora pois consegue operar em uma ampla faixa de temperatura e possui diversas funcionalidades interessantes para o controle de sinais analógicos de alta frequência. Algumas das funcionalidades, cruciais para o projeto, incluem:
+
 \begin{itemize}
-    \item
-    \item Três comparadores/amplificadores operacionais com conexão direta ao ADC da plataforma;
-    \item Interrupções de \texit{Change Notification} em todos os pinos de I/O;
-    \item Funções de PWM de alta velocidade;
-    \item Circuito menor e mais leve;
-    \item Pode operar em maior frequência.
+    \item Módulo ADC configurável de 10 bits e amostragem de 1.1 Msps ou 12 bits e amostragem de 500 ksps;
+    \item Três amplificadores operacionais integrados ao ADC da plataforma;
+    \item Interrupções de \textit{Change Notification} em todos os pinos de I/O;
+    \item \textit{Timers} e contadores de 32 bits;
+    \item Funções de PWM de alta velocidade.
 \end{itemize} 
 
 \begin{figure}[!htb]
     \centering
-    \includegraphics[width=0.9\textwidth]{./dados/figuras/psim2}
-    \caption{Forma da onda simulada da tensão na carga}
+    \includegraphics[width=0.3\textwidth]{./dados/figuras/dspic}
+    \caption{Microcontrolador DSPIC33E}
     \fonte{Autoria própria (2019)}
-    \label{fig:figura-graf_sim_1}
+    \label{fig:figura-dspic}
 \end{figure}
 
-No tocante ao microprocessador da plataforma, o mesmo...
-
+A CPU da plataforma possui arquitetura Harvard, típica da família de processadores PIC, possuindo uma palavra de instrução de 24 bits e 12 MB de endereços de memória de programa. O microprocessador possui um extenso suporte ao processamento digital de sinais, tendo acumuladores e ULA de 40 bits, dois multiplicadores de alta velocidade 17 por 17 bits e um \textit{barrell shifter} de 40 bits que consegue alternar 16 bits em úniclo ciclo de \textit{clock}. A arquitetura do processador fornece uma compilação eficiente de código, suportando a linguagem C e \textit{Assembly}.
 
 
