@@ -2,7 +2,7 @@
 \chapter{PROCEDIMENTOS METODOLÓGICOS}
 \label{chap:metodologia}
 
-Este capítulo tem como finalidade descrever a metodologia e os procedimentos adotados na confecção deste projeto, bem como também realizar uma consolidação de todos os métodos aqui utilizados e apresentar o funcionamento do sistema como um todo. Para tal, os procedimentos metodológicos foram divididos da seguinte forma: Fonte inversora (Seção 3.1),  \textit{Shunt} (Seção 3.2), DSPIC33  (Seção 3.3), Circuito de controle (Seção 3.4), Planta (Seção 3.5)
+Este capítulo tem como finalidade descrever a metodologia e os procedimentos adotados na confecção deste projeto, bem como também realizar uma consolidação de todos os métodos aqui utilizados e apresentar o funcionamento do sistema como um todo. Para tal, os procedimentos metodológicos foram divididos da seguinte forma: Fonte inversora (Seção 3.1), Fonte de alimentação (Seção 3.2),  Realimentação de corrente (Seção 3.3), DSPIC33  (Seção 3.4), Circuito de controle (Seção 3.5), Integração dos componentes (Seção 3.6)
 
 \section{FONTE INVERSORA}
 \label{sec:fonteInversora}
@@ -64,9 +64,26 @@ O projeto da fonte inversora se baseou em boa parte no conceito desenvolvido por
 
 \subsection{Montagem}
 
-\section{\texit{Shunt}}
-\label{sec:shunt}
 
+\section{\texit{FONTE DE ALIMENTAÇÃO}}
+\label{sec:font}
+
+\subsection{Montagem}
+
+
+\section{\texit{REALIMENTAÇÃO DE CORRENTE}}
+\label{sec:shunt}
+Devido à natureza do circuito, a realimentação por corrente foi escolhida. Para possibilitar esta realimentação, foi desenvolvida uma interface shunt analógica que é ligada diretamente ao ADC do microcontrolador. A interface consiste em um circuito que irá condicionar o sinal da tensão aplicada em um resistor shunt de 30 m $\Omega$ para os pinos de \textit{input} do microcontrolador. A figura abaixo mostra a interface projetada:
+
+\begin{figure}[!htb]
+    \centering
+    \includegraphics[width=0.9\textwidth]{./dados/figuras/proj-shunt}
+    \caption{Condicionador de sinal de realimentação}
+    \fonte{Autoria própria (2019)}
+    \label{fig:proj-font-inv}
+\end{figure}
+
+\subsection{Montagem}
 
 \section{DSPIC33}
 \label{sec:dsPIC}
@@ -91,7 +108,7 @@ O DSPIC33 é um microntrolador da família PIC, desenvolvido pela Microchip Tech
 
 A CPU da plataforma possui arquitetura Harvard, típica da família de processadores PIC, possuindo uma palavra de instrução de 24 bits e 12 MB de endereços de memória de programa. O microprocessador possui um extenso suporte ao processamento digital de sinais, tendo acumuladores e ULA de 40 bits, dois multiplicadores de alta velocidade 17 por 17 bits e um \textit{barrell shifter} de 40 bits que consegue alternar 16 bits em úniclo ciclo de \textit{clock}. A arquitetura do processador fornece uma compilação eficiente de código, suportando a linguagem C e \textit{Assembly}.
 
-No circuito, o microcontrolador...
+No circuito, o microcontrolador recebe o sinal de corrente  condicionado dos terminais da interface ligada ao \textit{shunt} e converte este sinal para um valor discreto. No programa do microprocessador, este valor é utilizado no algorítmo de controle, que processa digitalmente o sinal recebido e faz o chaveamento dos IGBTs.
 
 \begin{figure}[!htb]
     \centering
@@ -107,6 +124,6 @@ No circuito, o microcontrolador...
 
 
 
-\section{PLANTA}
+\section{INTEGRAÇÃO DOS COMPONENTES}
 \label{sec:plant}
 
