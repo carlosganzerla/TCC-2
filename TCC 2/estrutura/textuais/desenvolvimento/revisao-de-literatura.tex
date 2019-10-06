@@ -3,7 +3,7 @@
 \chapter{FUNDAMENTAÇÃO TEÓRICA}
 \label{chap:fundamentacaoTeorica}
 
-Este capítulo tem como ﬁnalidade estabelecer a fundamentação teórica associada aos conceitos aqui abordados. Para tal, foram julgados como necessários os seguintes temas: Radiação Microondas (Seção 2.1), Magnetron (Seção 2.2), Fontes Ferro-Ressonantes (Seção 2.3), Funcionamento do forno microondas (Seção 2.4), Inversores ressonantes (Seção 2.5), Microcontroladores (Seção 2.6).
+Este capítulo tem como ﬁnalidade estabelecer a fundamentação teórica associada aos conceitos aqui abordados. Para tal, foram julgados como necessários os seguintes temas: Radiação Microondas (Seção 2.1), Magnetron (Seção 2.2), Fontes Ferro-Ressonantes (Seção 2.3), Funcionamento do forno microondas (Seção 2.4), Inversores ressonantes (Seção 2.5), Microcontroladores (Seção 2.6), Uso de IGBTs em paralelo (Seção 2.7).
 
 \section{RADIAÇÃO MICROONDAS}
 \label{sec:radiacaoMicroondas}
@@ -99,24 +99,34 @@ Este tipo de inversor produz uma forma onda aproximadamente senoidal de frequên
 \end{figure}
 
 
-
 \section{MICROCONTROLADORES}
 \label{sec:micro}
 
 Um microcontrolador, ou UC (acrônimo para   $\mu$-controlador) é um pequeno computador em um único circuito integrado. Um microcontrolador pode ter uma ou mais CPUs, isto é núcleos de processamento, juntamente com uma memória e periféricos de entrada e saída programáveis. Memória na forma de \textit{flash} ou ROM é inclusa no \textit{chip}, em conjunto com uma pequena quantidade de memória RAM. Microcontroladores são projetados para aplicações embarcadas, em contraste com os microprocessadores utilizados nos computadores pessoais. Geralmente os UC são aplicados em produtos ou dispositivos controlados automaticamente, tais como sistemas de controle para motores ou controles remotos. Por terem tamanhos e custo reduzidos em relação a um projeto que utiliza um microprocessador, memória e dispositivos de I/O separadamente, os UC são economicamente vantajosos para fazer o controle de um dispositivo ou processo.
 
-\pagebreak 
 
-\begin{figure}[t]
+\begin{figure}[!htb]
     \centering
     \includegraphics[width=0.9\textwidth]{./dados/figuras/micro}
     \caption{Ilustração hipotética de um microcontrolador e seus periféricos}
     \fonte{\citeonline{Nicolosi}}
-    \label{fig:figura-mvc}
+    \label{fig:figura-uc}
 \end{figure}
 
-\null
-\vfill
+\pagebreak 
 
+\section{USO DE IGBTS EM PARALELO}
+\label{sec:paralleligbt}
 
+Em muitas aplicações, em vez de se empregar um IGBT projetado para atuar em determinada faixa de tensão, pode-se utilizar dois IGBTs menores conectados em paralelo. As vantagens deste tipo de conexão são um uma organização mais flexível e individual do \texit{layout}, fazendo com que as fontes de calor estejam mais distribuídas, de modo que maiores níveis de perdas sejam mitigados. No entanto, a principal desvantagem é a divisão desigual das perdas. A principal razão para isto é a variabilidade entre os parâmetros dos dois dispositivos, os quais dependem muito do fabricante. Outro motivo que pode levar a diferença citada é o uso de circuitos de alimentação assimétricos \cite{Infineon}.
             
+\begin{figure}[!htb]
+    \centering
+    \includegraphics[width=0.9\textwidth]{./dados/figuras/paralleligbt}
+    \caption{Esquemático de uso de IGBTs em paralelo}
+    \fonte{\citeonline{Infineon}}
+    \label{fig:figura-paralleligbt}
+\end{figure}
+
+%%\null
+%%\vfill

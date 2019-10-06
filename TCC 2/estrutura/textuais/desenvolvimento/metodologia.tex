@@ -2,12 +2,12 @@
 \chapter{PROCEDIMENTOS METODOLÓGICOS}
 \label{chap:metodologia}
 
-Este capítulo tem como finalidade descrever a metodologia e os procedimentos adotados na confecção deste projeto, bem como também realizar uma consolidação de todos os métodos aqui utilizados e apresentar o funcionamento do sistema como um todo. Para tal, os procedimentos metodológicos foram divididos da seguinte forma: Fonte inversora (Seção 3.1), DSPIC33E  (Seção 3.?)
+Este capítulo tem como finalidade descrever a metodologia e os procedimentos adotados na confecção deste projeto, bem como também realizar uma consolidação de todos os métodos aqui utilizados e apresentar o funcionamento do sistema como um todo. Para tal, os procedimentos metodológicos foram divididos da seguinte forma: Fonte inversora (Seção 3.1),  \textit{Shunt} (Seção 3.2), DSPIC33  (Seção 3.3), Circuito de controle (Seção 3.4), Planta (Seção 3.5)
 
 \section{FONTE INVERSORA}
 \label{sec:fonteInversora}
 
-Para realizar a alimentação do magnetron, foi utlizada uma fonte inversora, a qual consiste em um inversor ressonanete classe E. Segundo \cite{Hidenori1991}, uma fonte inversora tem as seguintes vantagens em relação à uma fonte ferrorressonante tradicional:
+Para realizar a alimentação do magnetron, foi utlizada uma fonte inversora, a qual consiste em um inversor ressonanete classe E. Segundo \citeonline{Hidenori1991}, uma fonte inversora tem as seguintes vantagens em relação à uma fonte ferrorressonante tradicional:
 \begin{itemize}
     \item Potência de saída controlável;
     \item Maior eficiência energética;
@@ -46,12 +46,32 @@ Para averiguar se uma fonte inversora consegue alimentar uma carga de alta potê
     \label{fig:figura-graf_sim_1}
 \end{figure}
 
-Na figura \ref{fig:figura-graf_sim_1}, pode-se ver que o pico de tensão da carga chega a quase 4 kV o que já é suficiente para o objetivo em questão. Logo, conclui-se que a fonte inversora é viável para a alimentação do circuito de um magnetron.
+Na figura \ref{fig:figura-graf_sim_1}, pode-se ver que o pico de tensão da carga chega à quase 4 kV, o que já é suficiente para o objetivo em questão. Logo, conclui-se que a fonte inversora é viável para a alimentação do circuito de um magnetron.
 
-\section{DSPIC33E}
+\subsection{Projeto}
+
+O projeto da fonte inversora se baseou em boa parte no conceito desenvolvido por \citeonline{Hidenori1991}. O chaveamento do circuito é feito por um microcontrolador que é realimentado por um sensor de corrente. Foram utilizados IGBTs em paralelo para aumentar a potência dos sistemas e reduzir perdas no dispositivo. Um transformador de três fios de alta potência alimenta as entradas que são ligadas ao magnetron com alta tensão. A tensão de entrada do circuito é a tensão da rede retificada por uma ponte de diodos. O circuito foi desenvolvido no software \texit{Altium Desginer}. A figura \ref{fig:proj-font-inv} mostra o circuito projetado:
+
+\begin{figure}[!htb]
+    \centering
+    \includegraphics[width=1.1\textwidth]{./dados/figuras/proj-font-inv}
+    \caption{Circuito projetado}
+    \fonte{Autoria própria (2019)}
+    \label{fig:proj-font-inv}
+\end{figure}
+
+\subsection{Descrição de funcionamento}
+
+\subsection{Montagem}
+
+\section{\texit{Shunt}}
+\label{sec:shunt}
+
+
+\section{DSPIC33}
 \label{sec:dsPIC}
 
-O DSPIC33E é um microntrolador da família PIC, desenvolvido pela Microchip Technology Inc., que possui funcionalidade de processador digital de sinais (DSP). Este componente foi escolhido para fazer o controle do chaveamento da fonte inversora pois consegue operar em uma ampla faixa de temperatura e possui diversas funcionalidades interessantes para o controle de sinais analógicos de alta frequência. Algumas das funcionalidades, cruciais para o projeto, incluem:
+O DSPIC33 é um microntrolador da família PIC, desenvolvido pela Microchip Technology Inc., que possui funcionalidade de processador digital de sinais (DSP). Este componente foi escolhido para fazer o controle do chaveamento da fonte inversora pois consegue operar em uma ampla faixa de temperatura e possui diversas funcionalidades interessantes para o controle de sinais analógicos de alta frequência. Algumas das funcionalidades, cruciais para o projeto, incluem:
 
 \begin{itemize}
     \item Módulo ADC configurável de 10 bits e amostragem de 1.1 Msps ou 12 bits e amostragem de 500 ksps;
@@ -64,11 +84,29 @@ O DSPIC33E é um microntrolador da família PIC, desenvolvido pela Microchip Tec
 \begin{figure}[!htb]
     \centering
     \includegraphics[width=0.3\textwidth]{./dados/figuras/dspic}
-    \caption{Microcontrolador DSPIC33E}
+    \caption{Microcontrolador DSPIC33}
     \fonte{Autoria própria (2019)}
     \label{fig:figura-dspic}
 \end{figure}
 
 A CPU da plataforma possui arquitetura Harvard, típica da família de processadores PIC, possuindo uma palavra de instrução de 24 bits e 12 MB de endereços de memória de programa. O microprocessador possui um extenso suporte ao processamento digital de sinais, tendo acumuladores e ULA de 40 bits, dois multiplicadores de alta velocidade 17 por 17 bits e um \textit{barrell shifter} de 40 bits que consegue alternar 16 bits em úniclo ciclo de \textit{clock}. A arquitetura do processador fornece uma compilação eficiente de código, suportando a linguagem C e \textit{Assembly}.
 
+No circuito, o microcontrolador...
+
+\begin{figure}[!htb]
+    \centering
+    \includegraphics[width=0.9\textwidth]{./dados/figuras/proj-uc}
+    \caption{Esquemático do microcontrolador no circuito}
+    \fonte{Autoria própria (2019)}
+    \label{fig:figura-dspic}
+\end{figure}
+
+
+\section{CIRCUITO DE CONTROLE}
+\label{sec:controlCircuit}
+
+
+
+\section{PLANTA}
+\label{sec:plant}
 
