@@ -50,7 +50,7 @@ Na figura \ref{fig:figura-graf_sim_1}, pode-se ver que o pico de tensão da carg
 
 \subsection{Projeto}
 
-O projeto da fonte inversora se baseou em boa parte no conceito desenvolvido por \citeonline{Hidenori1991}. O chaveamento do circuito é feito por um microcontrolador que é realimentado por um sensor de corrente. Foram utilizados IGBTs em paralelo para aumentar a potência dos sistemas e reduzir perdas no dispositivo. Um transformador de três fios de alta potência alimenta as entradas que são ligadas ao magnetron com alta tensão. A tensão de entrada do circuito é a tensão da rede retificada por uma ponte de diodos. O circuito foi desenvolvido no software \texit{Altium Desginer}. A figura \ref{fig:proj-font-inv} mostra o circuito projetado:
+O projeto da fonte inversora se baseou em boa parte no conceito desenvolvido por \citeonline{Hidenori1991}. Assim como no circuito implementado pelos engenheiros japoneses, a equipe baseou o projeto da fonte em um inversor classe E, e o chaveamento do circuito é feito por um microcontrolador. Devido à operação em alta frequência do sistema, o CI IR1153S foi usado para aplicar uma correção do fator de potência, diminuindo significativamente a taxa de distorção harmônica. Para uma maior eficiência, foram utilizados IGBTs em paralelo para aumentar a potência dos sistemas e reduzir as perdas no circuito. Um transformador de três fios de alta potência alimenta as entradas que são ligadas ao magnetron com uma tensão de cerca de 4kV. A tensão de entrada do circuito é a tensão da rede retificada por uma ponte de diodos. O esquemático do circuito foi desenvolvido no software \textit{Altium Desginer}. A figura \ref{fig:proj-font-inv} mostra o circuito projetado:
 
 \begin{figure}[!htb]
     \centering
@@ -68,12 +68,26 @@ O projeto da fonte inversora se baseou em boa parte no conceito desenvolvido por
 \section{\texit{FONTE DE ALIMENTAÇÃO}}
 \label{sec:font}
 
-\subsection{Montagem}
+Para alimentar os diferentes componentes do sistema, utilizou-se um projeto de fonte de alimentação isolada, com potência de 10W. A fonte utilizada possui saídas de 3,3V e 15V. A equipe fez uma modificação no circuito para energizar o inversor que faz o controle de potência do magnetron com a tensão após a ponte de diodos. Outra mudança feita foi o posicionamento de um resistor \textit{shunt}, ligado ao neutro do circuito. Este componente atua como um sensor de corrente que é usado na função de transferência da realimentação da planta. A figura abaixo mostra o esquemático da fonte de alimentação utilizada:
 
+
+\begin{figure}[H]
+   \centering
+    \includegraphics[width=0.55\textwidth]{./dados/figuras/proj-font-alim}
+    \caption{Fonte de alimentação do sistema}
+    \fonte{Autoria própria (2019)}
+    \label{fig:proj-font-inv}
+\end{figure}
+
+\pagebreak
+
+\subsection{Montagem}
 
 \section{\texit{REALIMENTAÇÃO DE CORRENTE}}
 \label{sec:shunt}
-Devido à natureza do circuito, a realimentação por corrente foi escolhida. Para possibilitar esta realimentação, foi desenvolvida uma interface shunt analógica que é ligada diretamente ao ADC do microcontrolador. A interface consiste em um circuito que irá condicionar o sinal da tensão aplicada em um resistor shunt de 30 m $\Omega$ para os pinos de \textit{input} do microcontrolador. A figura abaixo mostra a interface projetada:
+No trabalho apresentado por \citeonline{Hidenori1991}, a planta de controle de potência do magnetron utiliza uma realimentação de corrente, através de um transformador de corrente na saída do secundário do transformador de alta tensão. No entanto, esta abordagem causa distorção no circuito. Como a corrente que circula no sistema está diretamente relacionada à potência fornecida pelo magnetron, a realimentação de corrente foi escolhida como solução, porém a equipe decidiu utilizar uma técnica que utiliza um resistor \textit{shunt}.
+
+ Para possibilitar esta realimentação, foi desenvolvida uma interface analógica que é ligada diretamente ao ADC do microcontrolador. A interface consiste em um circuito que irá condicionar o sinal da tensão aplicada em um resistor \textit{shunt} de 30 m$\Omega$ para os pinos de \textit{input} do microcontrolador. A figura abaixo mostra a interface projetada:
 
 \begin{figure}[!htb]
     \centering
@@ -110,7 +124,7 @@ A CPU da plataforma possui arquitetura Harvard, típica da família de processad
 
 No circuito, o microcontrolador recebe o sinal de corrente  condicionado dos terminais da interface ligada ao \textit{shunt} e converte este sinal para um valor discreto. No programa do microprocessador, este valor é utilizado no algorítmo de controle, que processa digitalmente o sinal recebido e faz o chaveamento dos IGBTs.
 
-\begin{figure}[!htb]
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.9\textwidth]{./dados/figuras/proj-uc}
     \caption{Esquemático do microcontrolador no circuito}
