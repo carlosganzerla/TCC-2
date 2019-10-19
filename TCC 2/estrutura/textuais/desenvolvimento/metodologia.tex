@@ -2,7 +2,7 @@
 \chapter{PROCEDIMENTOS METODOLÓGICOS}
 \label{chap:metodologia}
 
-Este capítulo tem como finalidade descrever a metodologia e os procedimentos adotados na confecção deste projeto, bem como também realizar uma consolidação de todos os métodos aqui utilizados e apresentar o funcionamento do sistema como um todo. Para tal, os procedimentos metodológicos foram divididos da seguinte forma: Fonte inversora (Seção 3.1), Fonte de alimentação (Seção 3.2),  Realimentação de corrente (Seção 3.3), DSPIC33  (Seção 3.4), Circuito de controle (Seção 3.5), Integração dos componentes (Seção 3.6)
+Este capítulo tem como finalidade descrever a metodologia e os procedimentos adotados na confecção deste projeto, bem como também realizar uma consolidação de todos os métodos aqui utilizados e apresentar o funcionamento do sistema como um todo. Para tal, os procedimentos metodológicos foram divididos da seguinte forma: Fonte inversora (Seção 3.1), Fonte de alimentação (Seção 3.2),  Realimentação de corrente (Seção 3.3), DSPIC33  (Seção 3.4), Circuito de comunicação (Seção 3.5), Integração dos componentes (Seção 3.6)
 
 \section{FONTE INVERSORA}
 \label{sec:fonteInversora}
@@ -50,7 +50,7 @@ Na figura \ref{fig:figura-graf_sim_1}, pode-se ver que o pico de tensão da carg
 
 \subsection{Projeto}
 
-O projeto da fonte inversora se baseou em boa parte no conceito desenvolvido por \citeonline{Hidenori1991}. Assim como no circuito implementado pelos engenheiros japoneses, a equipe baseou o projeto da fonte em um inversor classe E, e o chaveamento do circuito é feito por um microcontrolador. Devido à operação em alta frequência do sistema, o CI IR1153S foi usado para aplicar uma correção do fator de potência, diminuindo significativamente a taxa de distorção harmônica. Para uma maior eficiência, foram utilizados IGBTs em paralelo para aumentar a potência dos sistemas e reduzir as perdas no circuito. Um transformador de três fios de alta potência alimenta as entradas que são ligadas ao magnetron com uma tensão de cerca de 4kV. A tensão de entrada do circuito é a tensão da rede retificada por uma ponte de diodos. O esquemático do circuito foi desenvolvido no software \textit{Altium Desginer}. A figura \ref{fig:proj-font-inv} mostra o circuito projetado:
+O projeto da fonte inversora se baseou em boa parte no conceito desenvolvido por \citeonline{Hidenori1991}. Assim como no circuito implementado pelos engenheiros japoneses, a equipe baseou o projeto da fonte em um inversor classe E, e o chaveamento do circuito é feito por um microcontrolador. Devido à operação em alta frequência do sistema, o CI IR1153S foi usado para aplicar uma correção do fator de potência, diminuindo significativamente a taxa de distorção harmônica (TDH). Para uma maior eficiência, foram utilizados IGBTs em paralelo para aumentar a potência dos sistemas e reduzir as perdas no circuito. Um transformador de três fios de alta potência alimenta as entradas que são ligadas ao magnetron com uma tensão de cerca de 4kV. A tensão de entrada do circuito é a tensão da rede retificada por uma ponte de diodos. O esquemático do circuito foi desenvolvido no software \textit{Altium Desginer}. A figura \ref{fig:proj-font-inv} mostra o circuito projetado:
 
 \begin{figure}[!htb]
     \centering
@@ -61,6 +61,8 @@ O projeto da fonte inversora se baseou em boa parte no conceito desenvolvido por
 \end{figure}
 
 \subsection{Descrição de funcionamento}
+O circuito é projetado para permitir o controle da potência de saída do magnetron, cujos terminais são conectados nos conectores P3 e P4, os quais estão ligados na saída do secundário do transformador. Os diodos D8 e D9, juntamente com os capacitores C22 e C24 formam um cirucito dobrador,  permitindo que o pico da tensão de saída chegue em aproximadamente 4 kV. O controle de potência é feito pelo chaveamento conjunto dos IGBTs Q4 e Q5, os quais controlam a passagem de corrente pelo \texit{shunt}. O chaveamento destes dispositivos é feito por um microcontrolador, que controla o chaveamento de acordo com o valor de corrente lido nos terminais do resistor \textit{shunt}. Quanto maior a corrente neste resistor, maior a tensão na saída do secundário do transformador. O IGBT Q3, juntamente com os diodos D10, D11, D12 e a rede de resistores consistem em um circuito que exerce o mesmo papel de um diodo roda-livre. Este circuito bloqueia os picos de tensão gerados do transformador quando os IGBTs Q4 e Q5 são deschaveados.
+Diferentemente do projeto do circuito  da figura \ref{fig:figura-inverter}, o circuito desenvolvido não utiliza um CI para realizar as ações determinadas pelo microcontrolador. No trabalho desenvolvido pela equipe, a realimentação é feita pelo resistor \textit{shunt} ligado ao neutro, em vez do transformador de corrente. Assim, a leitura do valor da corrente pode ser feita por um simples condicionamento do sinal, utilizando uma interface com transistores. O CI U7, além de diminuir a TDH, também faz o isolamento do sinal que vem do microcontrolador do resto do circuito. Portanto, optou-se por não utilizar um circuito de controle especializado.
 
 \subsection{Montagem}
 
@@ -68,7 +70,7 @@ O projeto da fonte inversora se baseou em boa parte no conceito desenvolvido por
 \section{\texit{FONTE DE ALIMENTAÇÃO}}
 \label{sec:font}
 
-Para alimentar os diferentes componentes do sistema, utilizou-se um projeto de fonte de alimentação isolada, com potência de 10W. A fonte utilizada possui saídas de 3,3V e 15V. A equipe fez uma modificação no circuito para energizar o inversor que faz o controle de potência do magnetron com a tensão após a ponte de diodos. Outra mudança feita foi o posicionamento de um resistor \textit{shunt}, ligado ao neutro do circuito. Este componente atua como um sensor de corrente que é usado na função de transferência da realimentação da planta. A figura abaixo mostra o esquemático da fonte de alimentação utilizada:
+Para alimentar os diferentes componentes do sistema, utilizou-se um projeto de fonte de alimentação isolada, com potência de 10W. A fonte utilizada possui saídas de 3,3V e 15V. A equipe fez uma modificação no circuito para energizar o inversor que faz o controle de potência do magnetron com a tensão após a ponte de diodos. Outra mudança feita foi o posicionamento de um resistor \textit{shunt}, ligado ao neutro do circuito. Este componente atua como um sensor de corrente que é usado na função de transferência da realimentação da planta. A alimentação do inversor é feita com o sinal de tensão que da sáida do indutor ligadp ao retificador de onda completa.  A figura abaixo mostra o esquemático da fonte de alimentação utilizada:
 
 
 \begin{figure}[H]
@@ -112,17 +114,9 @@ O DSPIC33 é um microntrolador da família PIC, desenvolvido pela Microchip Tech
     \item Funções de PWM de alta velocidade.
 \end{itemize} 
 
-\begin{figure}[!htb]
-    \centering
-    \includegraphics[width=0.3\textwidth]{./dados/figuras/dspic}
-    \caption{Microcontrolador DSPIC33}
-    \fonte{Autoria própria (2019)}
-    \label{fig:figura-dspic}
-\end{figure}
-
 A CPU da plataforma possui arquitetura Harvard, típica da família de processadores PIC, possuindo uma palavra de instrução de 24 bits e 12 MB de endereços de memória de programa. O microprocessador possui um extenso suporte ao processamento digital de sinais, tendo acumuladores e ULA de 40 bits, dois multiplicadores de alta velocidade 17 por 17 bits e um \textit{barrell shifter} de 40 bits que consegue alternar 16 bits em úniclo ciclo de \textit{clock}. A arquitetura do processador fornece uma compilação eficiente de código, suportando a linguagem C e \textit{Assembly}.
 
-No circuito, o microcontrolador recebe o sinal de corrente  condicionado dos terminais da interface ligada ao \textit{shunt} e converte este sinal para um valor discreto. No programa do microprocessador, este valor é utilizado no algorítmo de controle, que processa digitalmente o sinal recebido e faz o chaveamento dos IGBTs.
+No circuito, o microcontrolador recebe o sinal de corrente  condicionado dos terminais da interface ligada ao \textit{shunt} e converte este sinal para um valor discreto. No programa do microprocessador, este valor é utilizado no algoritmo de controle, que processa digitalmente o sinal recebido e faz o chaveamento dos IGBTs.
 
 \begin{figure}[H]
     \centering
@@ -133,11 +127,31 @@ No circuito, o microcontrolador recebe o sinal de corrente  condicionado dos ter
 \end{figure}
 
 
-\section{CIRCUITO DE CONTROLE}
-\label{sec:controlCircuit}
+\section{CIRCUITO DE COMUNICAÇÃO}
+\label{sec:commCircuit}
+O circuito de comunicação é responsável por receber sinais de controle e enviar sinais de status para o microcontrolador. Estes sinais de controle podem ser gerados a partir de uma ação do usuário em uma interface externa ou podem ser uma decisão do próprio algoritmo do processador. Para permitir a comunicação do micocontrolador com componentes de alta potência, desenvolveu-se um circuito de comunicação que faz a transmissão e recepção de dados. A interface envia dados para o microcontrolador, contendo sinais de estado do circuito, e recebe os sinais de controle. Este circuito utiliza opto-acopladores para fazer a transmissão e recepção dos dados, e apresenta uma saída de três conectores que são conectadas à saídas digitais. O esquemático abaixo mostra o circuito de comunicação:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{./dados/figuras/proj-comm}
+    \caption{Esquemático do circuito de comunicação}
+    \fonte{Autoria própria (2019)}
+    \label{fig:figura-comm}
+\end{figure}
 
 
 
 \section{INTEGRAÇÃO DOS COMPONENTES}
-\label{sec:plant}
+\label{sec:integration}
+Após desenvolver todos os circuitos que compõe a planta que controla a potência de saída do magnetron, a integração dos diferentes componentes foi feita. Para economizar espaço e deixar a montagem mais robusta, foi desenvolvido um esquemático de PCB que contém todas as partes desenvolvidas, usando componentes SMD. O projeto da placa levou em consideração a altas frequência que é usada no sistema e o objetio de o reduzir peso e espaço adicionais presentes em um circuito de forno microondas comum. A figura abaixo mostra o esquemático da PCB desenvolvida no \textit{Altium Designer}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{./dados/figuras/proj-pcb}
+    \caption{Esquemático da PCB desenvolvida}
+    \fonte{Autoria própria (2019)}
+    \label{fig:figura-comm}
+\end{figure}
+
+T.B.C.
 
