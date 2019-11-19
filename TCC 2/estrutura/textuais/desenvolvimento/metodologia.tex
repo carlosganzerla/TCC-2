@@ -212,58 +212,122 @@ O magnetron utilizado no projeto é um magnetron comum, disponível em microonda
 \end{figure}
 
 \subsection{Montagem completa}
-(DESCREVER FOTO TIRADA PELO CELULAR)
+(DESCREVA AQUI)
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{./dados/figuras/montagem-full}
+    \caption{Montagem completa}
+    \fonte{Autoria própria (2019)}
+    \label{fig:figura-montagem-shunt-uc}
+\end{figure}
 
 \section{PLANTA}
-Para fazer o controle de potência de saída do magnetron, foi projetada uma planta que possibilita o ajuste da potência ao \textit{set point} requerido. Para tal, foram desenvolvidos circuitos e algorítmos para microcontrolador de modo que o controle fosse realizado através do chaveamento dos IGBTs, utilizando realimentação de corrente pelo resistor \textit{shunt}. A estratégia de controle adotada foi o uso de um controlador proporcional integral (PI). Para controlar a potência de saída, o microncontorlador chaveia dos IGBTs variando dois parâmetros: ciclo de trabalho e frequência do pulso. Para a leitura do valor do \textit{shunt}, foi utlizado um conversor AD e um amplificador operacional, ambos integrados ao microncontrolador. Para medir a tensão do barramento de tensão da rede retificada (Vbus), também foi utlizado um conversor AD integrado ao microcontrolador. Esta tensão é usdada tanto no cálculo realizado para o controle potência de saída quando para medir a potência utlizada pelo circuito.
+Para fazer o controle de potência de saída do magnetron, foi projetada uma planta que possibilita o ajuste da potência ao \textit{set point} requerido. Para tal, foram desenvolvidos circuitos e algorítmos para microcontrolador de modo que o controle fosse realizado através do chaveamento dos IGBTs, utilizando realimentação de corrente pelo resistor \textit{shunt}. A estratégia de controle adotada foi o uso de um controlador proporcional integral (PI). Para controlar a potência de saída, o microncontorlador chaveia dois IGBTs, variando dois parâmetros: ciclo de trabalho e frequência do pulso. Para a leitura do valor do \textit{shunt}, foi utlizado um conversor AD e um amplificador operacional, ambos integrados ao microncontrolador. Para medir a tensão do barramento de tensão da rede retificada (Vbus), também foi utlizado um conversor AD integrado ao microcontrolador. Esta tensão é usada tanto no cálculo realizado para o controle potência de saída quanto para medir a potência utlizada pelo circuito.
 
 
 \subsection{Condicionamento de sinal do \textit{shunt}}
-Para condicionar o sinal dos terminais do \textit{shunt}, foram utilizados o amplificador operacional integrado ao microcontrolador e o conversor AD, também integrado ao dispositivo. Alguns valores utilizados já são pré-determinados, utilizando valores que são considerados como valores recomendados pelo fabricante do microcontrolador nos \textit{datasheets} fornecidos. Para realizar este condicionamento, foram calculados os ganhos das entradas do amplificador operacional, bem como os coeficiente de ajuste que minimizam o erro da conversão da corrente analógica para digital. No cálculo, os valores de pico atribuídos a corrente que passa no resistor foram determinados arbitrariamente, levando em conta os valores máximos totais de corrente que irão passar pelo circuito e pela conveniência em realizar os cálculos. A tabela abaixo mostra um resumo os resultados obtidos:
+Para condicionar o sinal dos terminais do \textit{shunt}, foram utilizados o amplificador operacional integrado ao microcontrolador e o conversor AD, também integrado ao dispositivo. Alguns valores utilizados já são pré-determinados, utilizando valores que são considerados como valores recomendados pelo fabricante do microcontrolador nos \textit{datasheets} fornecidos. Para realizar este condicionamento, foram calculados os ganhos das entradas do amplificador operacional, bem como os coeficiente de ajuste que minimizam o erro da conversão da corrente analógica para digital. No cálculo, os valores de pico atribuídos à corrente que passa no resistor foram determinados arbitrariamente, levando em conta os valores máximos totais de corrente que irão passar pelo circuito e a conveniência da realização dos cálculos. A tabela abaixo mostra um resumo os resultados obtidos:
 (INSIRA TABELA AQUI)
 
 \subsection{Leitura de tensão no microcontrolador}
-Para medir a tensão de forma digital, para a leitura no microcontrolador, foi necessário calcular os parâmetros para conversão da tensão analógica em digital. No cálculo, foram considerados os valores nos quais a tensão de pico de barramento varia (0 V à 180 V). Para determinar a relação entre o nível digital do sinal e a tensão de barramento medida, foi elaborada uma planilha no \textit{excel} que calcula o nível digital do sinal para um determinado valor de Vbus. Uma compilação dos resultados obtidos encontra-se na tabela abaixo:
+Para medir o valor da tensão no programa do microcontrolador, foi necessário calcular os parâmetros para conversão da tensão analógica em digital. No cálculo, foram considerados os valores nos quais a tensão de pico de barramento varia (0 V à 180 V). Para determinar a relação entre o nível digital do sinal e a tensão de barramento medida, foi elaborada uma planilha no software \textit{excel} que calcula o nível digital do sinal para um determinado valor de Vbus. Uma compilação dos resultados obtidos encontra-se na tabela abaixo:
 (INSIRA TABELA AQUI)
 
-Para minimizar o erro gerado pelas conversões, foram cálculados coeficientes de ajuste. Com estes coeficientes, o erro gerado pela foi conversão nulo em todos os valor atribuídos à tensão de barramento.
+Para minimizar o erro gerado pelas conversões, foram cálculados coeficientes de ajuste. Com estes coeficientes, o erro gerado pela conversão foi nulo em todos os valor atribuídos à tensão de barramento.
 
 \subsection{Algorítmo de controle}
-Para realizar o controle própriamente dito, foi desenvolvido um algorítmo de controle, que recebe como parâmetros de entrada corrente do \textit{shunt}, a tensão do barramento e, quando aplicável, os sinais de controle e status do circuito de comunicação. A saída do algorítmo, consistem nos pulsos ligados à porta do IGBT, de modo a chavear os componentes. O controlador desenvolvido foi do tipo PI, que de forma digital controla dois parâmetros dos pulsos de chaveamento do IGBT: a frequência do puslo e o ciclo de trabalho.
+Para realizar o controle própriamente dito, foi desenvolvido um algorítmo de controle, que recebe como parâmetros de entrada corrente do \textit{shunt}, a tensão do barramento e, quando aplicável, os sinais de controle e status do circuito de comunicação. A saída do algorítmo consiste nos pulsos ligados às portas do IGBTs, que fazem o chaveamento dos componentes. O controlador desenvolvido foi do tipo PI, que de forma digital controla dois parâmetros dos pulsos da porta dos IGBTs: a frequência do pulso e o ciclo de trabalho.
 
-Para desenvolver o algorítmo, foi escrito e compilado um código em C e \textit{Assembly}. Este código contém as funções que fazem o controle dos parâmetros citados e \textit{drivers} para os periféricos do microcontrolador utilizados. Como o microcontrolador não utiliza sistema operacional, o algorítmo foi baseado na utlização de máquinas de estado que abstraem os estados dos diferentes componentes que são utlizados na planta. Foram desenvolvidos três funções manipuladoras que são constitúidas de máquinas de estado, que representam as principais funções dos circuito: acionamento do magnetron, leitura do \textit{shunt} e da tensão do barramento e interface de comunicação. Além dos manipuladores criados, foram criados manipuladores de interrupções para algumas IRQs que estão presentes no microcontrolador. As IRQs utilizadas foram as interrupções dos conversores AD do \textit{input capture}, que é disparada por uma queda ou incremento no sinal no pino de I/O. A figura abaixo mostra a função \texit{main} do projeto:
-(figura aqui)
+Para desenvolver o algorítmo, foi escrito e compilado um código em C e \textit{Assembly}. Este código contém as funções que fazem o controle dos parâmetros citados e \textit{drivers} para os periféricos do microcontrolador utilizados. Como o microcontrolador não utiliza sistema operacional, o algorítmo foi baseado na utlização de máquinas de estado que abstraem os estados dos diferentes componentes que são utlizados na planta. Foram desenvolvidas três funções manipuladoras que são constitúidas de máquinas de estado, que representam as principais funções dos circuito: acionamento do magnetron, leitura do \textit{shunt} e da tensão do barramento e interface de comunicação. Além dos manipuladores criados, foram criados manipuladores de interrupções para algumas IRQs que estão presentes no microcontrolador. As IRQs utilizadas foram as interrupções dos conversores AD do \textit{input capture}, que é disparada por uma queda ou incremento no sinal do pino de I/O. A figura abaixo mostra a função \texit{main} do projeto:
 
-A função principal consiste apenas na inicialização dos periféricos do circuito
-e no laço que ficará chamando os manipuladores desenvolvidos.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{./dados/figuras/func_main}
+    \caption{Função \textit{main}}
+    \fonte{Autoria própria (2019)}
+    \label{fig:figura-magnetron-usado}
+\end{figure}
+
+A função principal consiste apenas na inicialização dos periféricos do circuito e no laço de repetição que chana os manipuladores desenvolvidos.
+
+No algorítmo, parâmetros de mínimos e máximos foram definidos de modo a possibilitar o controle do \textit{set-point} dentro de alguns limites de potência. Definiu-se que a frequência do chaveamento deve estar ente 20 kHz e 45 kHz, devido ao limite audível e a resposta em frequência dos componentes. Já quanto à potência, foi estipulado que deve estar entre 400 W e 1200 W, para possibilitar uma operação segura e contínua do magnetron.
 
 \subsubsection{Algorítmo do controlador PI}
-O algorítmo do controlador PI faz, de forma digital, o controle do \textit{set point}, através da soma acumulada dos valores anteriores multiplicados pelas constantes de proporção integral somados com a componente proporcional da fórmula. O algorítmo foi implementado na linguagem \textit{Assembly} para uma melhor performance, porém será exposto neste trabalho em C, da maneira em que foi idealizado:
-(figura aqui)
+O algorítmo do controlador PI faz, de forma digital, o controle do \textit{set point} através da soma acumulada dos valores anteriores multiplicados pelas constantes de proporção integral somados com a componente proporcional da fórmula. O algorítmo foi implementado na linguagem \textit{Assembly} para uma melhor performance, porém será exposto neste trabalho em C, da maneira em que foi idealizado:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{./dados/figuras/func_pi}
+    \caption{Algorítmo em C do controlador PI}
+    \fonte{Autoria própria (2019)}
+    \label{fig:figura-magnetron-usado}
+\end{figure}
 
 \subsubsection{Interrupções do Conversor AD}
-Estas interrupções são disparadas a cada 30 us, e os manipuladores desenvolvido para esta interrupção lêem o nível do sinal analógico convertido e fazem o cálculo para o valor analógico equivalente, de acordo com os coeficientes de ajuste calculados nas tabelas x e y. O valor calculado é atribuída à variáveis globais que são utilizadas nos demais algorítmos do sistema. A figura detalha os manipuladores:
+Estas interrupções são disparadas a cada 30 us, e os manipuladores desenvolvidos para esta interrupção lêem o nível do sinal analógico convertido e fazem o cálculo para o valor analógico equivalente, de acordo com os coeficientes de ajuste calculados nas tabelas x e y. O valor calculado é atribuído à variáveis globais que são utilizadas nos demais algorítmos do sistema. A figura z detalha os manipuladores:
 (figura aqui)
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{./dados/figuras/irq_ad}
+    \caption{Maniuplador desenvolvido}
+    \fonte{Autoria própria (2019)}
+    \label{fig:figura-magnetron-usado}
+\end{figure}
 
 
 \subsubsection{Interrupção de \textit{input capture}}
-Esta interrupção é acionada quando uma borda de subida ou descida é detectada pelo pino de entrada. O sinal de entrada deste pino é o sinal de status que vêm do circuito de comunicação. O manipulador desenvolvido para esta IRQ verifica se a borda detectada é de subida ou descida e conta os tempos de sinal alto e baixo. Os valores de sinal alto e baixo representam a potência solicitada pelo controlador para regular a potência de saída do magnetron. Esta interrupção também chama uma função que sinaliza que a realimentação está funcionando, a qual será detalhada na subseçao da interface de comunicação. A figura z contém o algorítmo desenvolvido para esta interrupção:
+Esta interrupção é acionada quando uma borda de subida ou descida é detectada pelo pino de entrada. O sinal de entrada deste pino é o sinal de status que vem do circuito de comunicação. O manipulador desenvolvido para esta IRQ verifica se a borda detectada é de subida ou descida e conta o intervalo de tempo em que o sinal está alto e o intervalo de tempo em que o sinal está baixo. Os valores de sinal alto e baixo representam a potência solicitada pelo controlador para regular a potência de saída do magnetron. Esta interrupção também chama uma função que sinaliza que a realimentação está funcionando, a qual será detalhada na subseçao da interface de comunicação. A figura z contém o algorítmo desenvolvido para esta interrupção: (figura aqui)
 
-
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{./dados/figuras/irq_ic}
+    \caption{Maniuplador desenvolvido}
+    \fonte{Autoria própria (2019)}
+    \label{fig:figura-magnetron-usado}
+\end{figure}
 
 
 \subsubsection{Algorítmo de acionamento do Magnetron}
-Por ser um componente de alta potência que pode causar danos ao circuito ou a terceiros caso operado incorretamente, o magnetron possui um algorítmo de acionamento próprio, que baseado nas variáveis de entrada medidas pelo microcontrolador e no estado do programa pode desligar, ligar ou proteger o componente, colocando-o em modo \textit{stand-by}. Para tomar a decisão, o algorítmo leva em consideração a tensão medida pelo microcontrolador e o ciclo de trabalho requisitado pelo controlador. Inicialmente, o magnetron começa em estado inicial, o qual somente inicializa variáveis do controlador. Após isto, o sistema vai para o estado \textit{stand-by}, e aguarda o inicio do acionamento por parte da interface de usuário. Quando o acionamento é realizado, o algorítmo vai para o estado "rodando", o qual faz o controle PI, faz verificações de segurança, mede os valores atuais de ciclo de trabalho e freuqência e atribui novo ciclo de trabalho e frequência de acordo com o resultado obtido no algorítmo do controlador PI. A figura (y) mostra o algorítmo desenvolvido:
-(figura aqui)
+Por ser um componente de alta potência que pode causar danos ao circuito ou a terceiros caso operado incorretamente, o magnetron possui um algorítmo de acionamento próprio que, baseado nas variáveis de entrada medidas pelo microcontrolador e no estado do programa, pode desligar, ligar ou proteger o componente, colocando-o em modo \textit{stand-by}. Para tomar a decisão, o algorítmo leva em consideração a tensão medida pelo conversor AD e o ciclo de trabalho requisitado pelo controlador. Inicialmente, o magnetron começa em estado inicial, o qual somente inicializa variáveis do controlador. Feito isso, o sistema vai para o estado \textit{stand-by}, e aguarda o inicio do acionamento por parte da interface de usuário. Quando o acionamento é realizado, o algorítmo vai para o estado "rodando", o qual realiza o controle PI, faz verificações de segurança, mede os valores atuais de ciclo de trabalho e frequência e atribui novo ciclo de trabalho e frequência de acordo com o resultado obtido no algorítmo do controlador PI. A figura (y) mostra o algorítmo desenvolvido:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{./dados/figuras/func_mwo}
+    \caption{Algorítmo desenvolvido}
+    \fonte{Autoria própria (2019)}
+    \label{fig:figura-magnetron-usado}
+\end{figure}
 
 \subsubsection{Algorítmo de leitura do \textit{shunt} e da tensão de barramento}
 Este algorítmo realiza as leituras dos valores medidos pelos conversores AD, e atribui os valores adquirdos à variáveis internas do sistema. Para adquirir os valores, o programa faz uma média móvel do valor medido e utiliza o resultado para determinar o valor da potência. Esta potência então é lida pelo controlador PI para fazer o controle da potência de saída do magnetron. Segue o algorítmo desenvolvido:
-(figura aqui)
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{./dados/figuras/func_analog}
+    \caption{Algorítmo desenvolvido}
+    \fonte{Autoria própria (2019)}
+    \label{fig:figura-magnetron-usado}
+\end{figure}
 
 A função \textit{AnalogCalculateAverage} calcula a média móvel tanto do sensor de corrente quando do sensor de tensão. Para diferenciar um do outro, apenas recebe um parâmetro com a identificação de qual que se quer fazer a média. A figura abaixo detalha a função desenvolvida:
-(figura)
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{./dados/figuras/func_average}
+    \caption{Função desenvolvida}
+    \fonte{Autoria própria (2019)}
+    \label{fig:figura-magnetron-usado}
+\end{figure}
 
 
 \subsection{Interface de comunicação}
-O algorítmo desta função recebe como entrada as larguras de pulso medidas pelo manipulador da interrupção de \textit{input capture} e um sinal com metade da frequência e mesmo ciclo de trabalho, que é lido no no próprio microcontrolador. Como saída, o programa envia um sinal de frequência de 220 Hz, que contém o sinal do status do sistema, que sinaliza se o \textit{feedback} está funcionando ou não. No algorítmo, através das larguras de pulso medidas pela interrupção, é calculada o percentual de potência máxima solicitada pelo controlador. Ou seja, esta função controla o \textit{set point} da planta. A figura abaixo mostra a função desenvolvida no detalhe:
-(figura)
+O algorítmo desta função recebe como entrada as larguras de pulso medidas pelo manipulador da interrupção de \textit{input capture} e um sinal com metade da frequência e mesmo ciclo de trabalho, que é lido no no próprio microcontrolador. Como saída, o programa envia um sinal de frequência de 220 Hz, que contém o sinal do status do sistema, o qual sinaliza se o \textit{feedback} está funcionando ou não. No algorítmo, através das larguras de pulso medidas pelo manipulador da interrupção, é calculado o percentual de potência máxima solicitada pelo controlador. Ou seja, esta função controla o \textit{set point} da planta. A figura abaixo mostra a função desenvolvida no detalhe:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{./dados/figuras/func_comm}
+    \caption{Função desenvolvida}
+    \fonte{Autoria própria (2019)}
+    \label{fig:figura-magnetron-usado}
+\end{figure}
