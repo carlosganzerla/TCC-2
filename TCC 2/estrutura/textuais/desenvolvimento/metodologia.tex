@@ -69,7 +69,7 @@ Diferentemente do projeto do circuito  da figura \ref{fig:figura-inverter}, o ci
 \section{\texit{FONTE DE ALIMENTAÇÃO}}
 \label{sec:font}
 
-Para alimentar os diferentes componentes do sistema, utilizou-se um projeto de fonte de alimentação isolada, com potência de 10W. A fonte utilizada possui saídas de 3,3V e 15V, utilizando reguladores chaveados para manter o sinal de tensão o mais constate possível. A equipe fez uma modificação no circuito para energizar o inversor que faz o controle de potência do magnetron com a tensão após a ponte de diodos. Outra mudança feita foi o posicionamento de um resistor \textit{shunt}, ligado ao neutro do circuito. Este componente atua como um sensor de corrente que é usado na função de transferência da realimentação da planta. A alimentação do inversor é feita com o sinal de tensão que da sáida do indutor ligado ao retificador de onda completa.  A figura abaixo mostra o esquemático da fonte de alimentação utilizada:
+Para alimentar os diferentes componentes do sistema, utilizou-se um projeto de fonte de alimentação isolada, com potência de 10W. A fonte utilizada possui saídas de 3,3V e 15V, utilizando reguladores chaveados para manter o sinal de tensão o mais constate possível. A equipe fez uma modificação no circuito para energizar o inversor que faz o controle de potência do magnetron com a tensão após a ponte de diodos. Outra mudança feita foi o posicionamento de um resistor \textit{shunt}, ligado ao neutro do circuito. Este componente atua como um sensor de corrente que é usado na função de transferência da realimentação da planta. A alimentação do inversor é feita com o sinal de tensão que da sáida do indutor ligado ao retificador de onda completa. Também foi adicionada uma série de resistores que são utilizados em um divisor de tensão que é ligado à um conversor AD do microcontrolador. A tensão medida no resistor R20 é utilizada no cálculo da potência utilizada pelo circuito. A figura abaixo mostra o esquemático da fonte de alimentação utilizada:
 
 
 \begin{figure}[H]
@@ -212,7 +212,7 @@ O magnetron utilizado no projeto é um magnetron comum, disponível em microonda
 \end{figure}
 
 \subsection{Montagem completa}
-(DESCREVA AQUI)
+A montagem completa utilizou um forno microondas da marca Panasonic do ano 1995. A fonte ferro-ressonante de alimentação do magnetron foi retirada, e trocada pela placa montada desenvolvida pela equipe. O magnetron do forno utilizado foi preservado. A imagem abaixo mostra a montagem completa:
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.9\textwidth]{./dados/figuras/montagem-full}
@@ -226,14 +226,13 @@ Para fazer o controle de potência de saída do magnetron, foi projetada uma pla
 
 
 \subsection{Condicionamento de sinal do \textit{shunt}}
-Para condicionar o sinal dos terminais do \textit{shunt}, foram utilizados o amplificador operacional integrado ao microcontrolador e o conversor AD, também integrado ao dispositivo. Alguns valores utilizados já são pré-determinados, utilizando valores que são considerados como valores recomendados pelo fabricante do microcontrolador nos \textit{datasheets} fornecidos. Para realizar este condicionamento, foram calculados os ganhos das entradas do amplificador operacional, bem como os coeficiente de ajuste que minimizam o erro da conversão da corrente analógica para digital. No cálculo, os valores de pico atribuídos à corrente que passa no resistor foram determinados arbitrariamente, levando em conta os valores máximos totais de corrente que irão passar pelo circuito e a conveniência da realização dos cálculos. A tabela abaixo mostra um resumo os resultados obtidos:
-(INSIRA TABELA AQUI)
+Para condicionar o sinal dos terminais do \textit{shunt}, foram utilizados o amplificador operacional integrado ao microcontrolador e o conversor AD, também integrado ao dispositivo. Alguns valores utilizados já são pré-determinados, utilizando valores que são considerados como valores recomendados pelo fabricante do microcontrolador nos \textit{datasheets} fornecidos. Para realizar este condicionamento, foram calculados os ganhos das entradas do amplificador operacional, bem como os coeficiente de ajuste que minimizam o erro da conversão da corrente analógica para digital. No cálculo, os valores de pico atribuídos à corrente que passa no resistor foram determinados arbitrariamente, levando em conta os valores máximos totais de corrente que irão passar pelo circuito e a conveniência da realização dos cálculos. O conversor AD possui 10 bits, logo, 1024 níveis de corrente. A tabela abaixo mostra o resultado dos calculos dos ganhos do amplificador operacional e da conversão analógico digital:
+
+
 
 \subsection{Leitura de tensão no microcontrolador}
-Para medir o valor da tensão no programa do microcontrolador, foi necessário calcular os parâmetros para conversão da tensão analógica em digital. No cálculo, foram considerados os valores nos quais a tensão de pico de barramento varia (0 V à 180 V). Para determinar a relação entre o nível digital do sinal e a tensão de barramento medida, foi elaborada uma planilha no software \textit{excel} que calcula o nível digital do sinal para um determinado valor de Vbus. Uma compilação dos resultados obtidos encontra-se na tabela abaixo:
-(INSIRA TABELA AQUI)
+Para medir o valor da tensão no programa do microcontrolador, foi necessário calcular os parâmetros para conversão da tensão analógica em digital. No cálculo, foram considerados os valores nos quais a tensão de pico de barramento varia (0 V à 180 V). Para minimizar o erro gerado pelas conversões, foram cálculados coeficientes de ajuste. Com estes coeficientes, o erro gerado pela conversão foi nulo em todos os valor atribuídos à tensão de barramen Foi elaborada uma planilha no software \textit{excel} que calcula o nível digital do sinal para um determinado valor de Vbus. Estes valores foram utilizados para se obter os parâmetros de conversão que geram um erro aceitável. Uma compilação dos resultados obtidos encontra-se na tabela abaixo:
 
-Para minimizar o erro gerado pelas conversões, foram cálculados coeficientes de ajuste. Com estes coeficientes, o erro gerado pela conversão foi nulo em todos os valor atribuídos à tensão de barramento.
 
 \subsection{Algorítmo de controle}
 Para realizar o controle própriamente dito, foi desenvolvido um algorítmo de controle, que recebe como parâmetros de entrada corrente do \textit{shunt}, a tensão do barramento e, quando aplicável, os sinais de controle e status do circuito de comunicação. A saída do algorítmo consiste nos pulsos ligados às portas do IGBTs, que fazem o chaveamento dos componentes. O controlador desenvolvido foi do tipo PI, que de forma digital controla dois parâmetros dos pulsos da porta dos IGBTs: a frequência do pulso e o ciclo de trabalho.

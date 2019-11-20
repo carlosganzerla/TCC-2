@@ -3,7 +3,7 @@
 \chapter{FUNDAMENTAÇÃO TEÓRICA}
 \label{chap:fundamentacaoTeorica}
 
-Este capítulo tem como ﬁnalidade estabelecer a fundamentação teórica associada aos conceitos aqui abordados. Para tal, foram julgados como necessários os seguintes temas: Radiação Microondas (Seção 2.1), Magnetron (Seção 2.2), Fontes Ferro-Ressonantes (Seção 2.3), Funcionamento do forno microondas (Seção 2.4), Inversores ressonantes (Seção 2.5), Microcontroladores (Seção 2.6), Uso de IGBTs em paralelo (Seção 2.7).
+Este capítulo tem como ﬁnalidade estabelecer a fundamentação teórica associada aos conceitos aqui abordados. Para tal, foram julgados como necessários os seguintes temas: Radiação Microondas (Seção 2.1), Magnetron (Seção 2.2), Fontes Ferro-Ressonantes (Seção 2.3), Funcionamento do forno microondas (Seção 2.4), Inversores ressonantes (Seção 2.5), Microcontroladores (Seção 2.6), Uso de IGBTs em paralelo (Seção 2.7), Controlador Proporcional Integral (Seção 2.8).
 
 \section{RADIAÇÃO MICROONDAS}
 \label{sec:radiacaoMicroondas}
@@ -127,6 +127,20 @@ Em muitas aplicações, em vez de se empregar um IGBT projetado para atuar em de
     \fonte{\citeonline{Infineon}}
     \label{fig:figura-paralleligbt}
 \end{figure}
+
+\section{CONTROLADOR PROPORCIONAL INTEGRAL}
+\label{sec:pi-controller}
+O controlador Proporcional Integral (PI) é um mecanismo de controle em malha fechada empregando realimentação. Este controlador cálcula constantemente constantemente o erro variante no tempo que é a diferença entre o \textit{set-point} e o valor da variável de processo medida. A figura abaixo mostra uma representação da malha de controle PI, com a fórmula do algorítmo:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{./dados/figuras/pi-controller}
+    \caption{Controlador PI}
+    \fonte{\citeonline{Apmonitor}}
+    \label{fig:figura-pi-controller}
+\end{figure}
+
+Os dois valores de ajuste para o controlador PI são as constantes proporcional e integrativa. A constante proporcional é o que se chama de ganho do controlador, que irá apenas multiplicar a diferença entre o \textit{set point} e o valor da variável de processo medida. Já a constante integrativa é um multiplicador do erro proporcional, e um valor maior torna o controlador mais agressivo, de modo a diminuir o tempo de resposta ao passo que aumenta a instabilidade.
 
 %%\null
 %%\vfill
