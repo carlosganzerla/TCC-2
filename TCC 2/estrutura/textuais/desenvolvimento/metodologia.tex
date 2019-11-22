@@ -2,7 +2,18 @@
 \chapter{PROCEDIMENTOS METODOLÓGICOS}
 \label{chap:metodologia}
 
-Este capítulo tem como finalidade descrever a metodologia e os procedimentos adotados na confecção deste projeto, bem como também realizar uma consolidação de todos os métodos aqui utilizados e apresentar o funcionamento do sistema como um todo. Para tal, os procedimentos metodológicos foram divididos da seguinte forma: Fonte inversora (Seção 3.1), Fonte de alimentação (Seção 3.2),  Realimentação de corrente (Seção 3.3), DSPIC33  (Seção 3.4), Circuito de comunicação (Seção 3.5), Montagem dos circuitos (Seção 3.6), Planta (seção 3.7).
+Este capítulo tem como finalidade descrever a metodologia e os procedimentos adotados na confecção deste projeto, bem como também realizar uma consolidação de todos os métodos aqui utilizados e apresentar o funcionamento do sistema como um todo.  A figura abaixo mostra um diagrama contendo os diferentes módulo que compõem o projeto:
+
+\begin{figure}[H]
+    \centering
+    \caption{Diagrama geral da planta de controle}
+    \includegraphics[width=1\textwidth]{./dados/figuras/overall_diagram}
+    \fonte{Autoria Própria}
+    \label{fig:figura-overall_diagram}
+\end{figure}
+
+
+Assim, cada módulo será detalhado nas seções que seguem à este capítulo. Para tal, os procedimentos metodológicos foram divididos da seguinte forma: Fonte inversora (Seção 3.1), Fonte de alimentação (Seção 3.2),  Realimentação de corrente (Seção 3.3), DSPIC33  (Seção 3.4), Circuito de comunicação (Seção 3.5), Montagem dos circuitos (Seção 3.6), Planta (seção 3.7).
 
 \section{FONTE INVERSORA}
 \label{sec:fonteInversora}
@@ -126,7 +137,7 @@ No circuito, o microcontrolador recebe o sinal digital de corrente  condicionado
 
 \section{CIRCUITO DE COMUNICAÇÃO}
 \label{sec:commCircuit}
-O circuito de comunicação é responsável por receber sinais de controle e enviar sinais de status para o microcontrolador. Estes sinais de controle podem ser gerados a partir de uma ação do usuário em uma interface externa ou podem ser uma decisão do próprio algoritmo do processador. Para permitir a comunicação do microcontrolador com componentes de alta potência, desenvolveu-se um circuito de comunicação que faz a transmissão e recepção de dados. A interface envia dados para o microcontrolador, contendo sinais de estado do circuito, e recebe os sinais de controle. Este circuito utiliza opto-acopladores para fazer a transmissão e recepção dos dados, e apresenta uma saída de três conectores que são conectadas à saídas digitais. O esquemático abaixo mostra o circuito de comunicação:
+O circuito de comunicação é responsável por receber sinais de controle e enviar sinais de status para o microcontrolador. Estes sinais de controle podem ser gerados a partir de uma ação do usuário em uma interface externa ou podem ser uma decisão do próprio algoritmo do processador. Para permitir a comunicação do microcontrolador com componentes de alta potência, desenvolveu-se um circuito de comunicação que faz a transmissão e recepção de dados. A interface envia dados para o microcontrolador, contendo sinais de estado do circuito, e recebe os sinais de controle. Este circuito utiliza opto-acopladores para fazer a transmissão e recepção dos dados e apresenta uma saída de três conectores que são conectadas à saídas digitais. O  opto-acoplador utilizado foi o modelo K10101A, da marca Cosmo Electronics. Este circuito integrado possui frequência de operação de até 80 kHz, que é mais que suficiente para o projeto, dado que os sinais de controle não necessitam de uma alta taxa de transmissão. O esquemático abaixo mostra o circuito de comunicação:
 
 \begin{figure}[H]
     \centering
@@ -222,7 +233,7 @@ A montagem completa utilizou um forno microondas da marca Panasonic do ano 1995.
 \end{figure}
 
 \section{PLANTA}
-Para fazer o controle de potência de saída do magnetron, foi projetada uma planta que possibilita o ajuste da potência ao \textit{set point} requerido. Para tal, foram desenvolvidos circuitos e algorítmos para microcontrolador de modo que o controle fosse realizado através do chaveamento dos IGBTs, utilizando realimentação de corrente pelo resistor \textit{shunt}. A estratégia de controle adotada foi o uso de um controlador proporcional integral (PI). Para controlar a potência de saída, o microcontrolador chaveia dois IGBTs, variando dois parâmetros: ciclo de trabalho e frequência do pulso. Para a leitura do valor do \textit{shunt}, foi utilizado um conversor AD e um amplificador operacional, ambos integrados ao microcontrolador. Para medir a tensão do barramento de tensão da rede retificada (Vbus), também foi utilizado um conversor AD integrado ao microcontrolador. Esta tensão é usada tanto no cálculo realizado para o controle potência de saída quanto para medir a potência utilizada pelo circuito.
+Para fazer o controle de potência de saída do magnetron, foi projetada uma planta que possibilita o ajuste da potência ao \textit{set point} requerido. Para tal, foram desenvolvidos circuitos e algoritmos para microcontrolador de modo que o controle fosse realizado através do chaveamento dos IGBTs, utilizando realimentação de corrente pelo resistor \textit{shunt}. A estratégia de controle adotada foi o uso de um controlador proporcional integral (PI). Para controlar a potência de saída, o microcontrolador chaveia dois IGBTs, variando dois parâmetros: ciclo de trabalho e frequência do pulso. Para a leitura do valor do \textit{shunt}, foi utilizado um conversor AD e um amplificador operacional, ambos integrados ao microcontrolador. Para medir a tensão do barramento de tensão da rede retificada (Vbus), também foi utilizado um conversor AD integrado ao microcontrolador. Esta tensão é usada tanto no cálculo realizado para o controle potência de saída quanto para medir a potência utilizada pelo circuito.
 
 \subsection{Condicionamento de sinal do \textit{shunt}}
 Para condicionar o sinal dos terminais do \textit{shunt}, foram utilizados o amplificador operacional integrado ao microcontrolador e o conversor AD, também integrado ao dispositivo. Alguns valores utilizados já são pré-determinados, utilizando valores que são considerados como valores recomendados pelo fabricante do microcontrolador nos \textit{datasheets} fornecidos. Para realizar este condicionamento, foram calculados os ganhos das entradas do amplificador operacional, bem como os coeficiente de ajuste que minimizam o erro da conversão da corrente analógica para digital. No cálculo, os valores de pico atribuídos à corrente que passa no resistor foram determinados arbitrariamente, levando em conta os valores máximos totais de corrente que irão passar pelo circuito e a conveniência da realização dos cálculos. O conversor AD possui 10 bits, logo, 1024 níveis de corrente. A tabela abaixo mostra o resultado dos cálculos dos ganhos do amplificador operacional e da conversão analógico digital:
@@ -284,14 +295,14 @@ Esta interrupção é acionada quando uma borda de subida ou descida é detectad
 
 
 \subsubsection{Algoritmo de acionamento do Magnetron}
-Por ser um componente de alta potência que pode causar danos ao circuito ou a terceiros caso operado incorretamente, o magnetron possui um algoritmo de acionamento próprio que, baseado nas variáveis de entrada medidas pelo microcontrolador e no estado do programa, pode desligar, ligar ou proteger o componente, colocando-o em modo \textit{stand-by}. Para tomar a decisão, o algoritmo leva em consideração a tensão medida pelo conversor AD e o ciclo de trabalho requisitado pelo controlador. Inicialmente, o magnetron começa em estado inicial, o qual somente inicializa variáveis do controlador. Feito isso, o sistema vai para o estado \textit{stand-by}, e aguarda o início do acionamento por parte da interface de usuário. Quando o acionamento é realizado, o algoritmo vai para o estado "rodando", o qual realiza o controle PI, faz verificações de segurança, mede os valores atuais de ciclo de trabalho e frequência e atribui novo ciclo de trabalho e frequência de acordo com o resultado obtido no algoritmo do controlador PI. A figura abaixo mostra o algoritmo desenvolvido:
+Por ser um componente de alta potência que pode causar danos ao circuito ou a terceiros caso operado incorretamente, o magnetron possui um algoritmo de acionamento próprio que, baseado nas variáveis de entrada medidas pelo microcontrolador e no estado do programa, pode desligar, ligar ou proteger o componente, colocando-o em modo \textit{stand-by}. Para tomar a decisão, o algoritmo leva em consideração a tensão medida pelo conversor AD e o ciclo de trabalho requisitado pelo controlador. Inicialmente, o magnetron começa em estado inicial, o qual somente inicializa variáveis do controlador. Feito isso, o sistema vai para o estado \textit{stand-by}, e aguarda o início do acionamento por parte da interface de usuário. Quando o acionamento é realizado, o algoritmo vai para o estado "rodando", o qual realiza o controle PI, faz verificações de segurança, mede os valores atuais de ciclo de trabalho e frequência e atribui novo ciclo de trabalho e frequência de acordo com o resultado obtido no algoritmo do controlador PI. A figura abaixo mostra o fluxograma do algoritmo desenvolvido:
 
 \begin{figure}[H]
     \centering
     \caption{Algoritmo desenvolvido}
-    \includegraphics[width=1\textwidth]{./dados/figuras/func_mwo}
+    \includegraphics[width=1\textwidth]{./dados/figuras/mwo_flow}
     \fonte{Autoria própria (2019)}
-    \label{fig:figura-func_mwo}
+    \label{fig:figura-mwo_flow}
 \end{figure}
 
 \subsubsection{Algoritmo de leitura do \textit{shunt} e da tensão de barramento}

@@ -130,7 +130,7 @@ Em muitas aplicações, em vez de se empregar um IGBT projetado para atuar em de
 
 \section{CONTROLADOR PROPORCIONAL INTEGRAL}
 \label{sec:pi-controller}
-O controlador Proporcional Integral (PI) é um mecanismo de controle em malha fechada empregando realimentação. Este controlador calcula constantemente constantemente o erro variante no tempo que é a diferença entre o \textit{set-point} e o valor da variável de processo medida. A figura abaixo mostra uma representação da malha de controle PI, com a fórmula do algoritmo:
+O controlador Proporcional Integral (PI) é um mecanismo de controle em malha fechada empregando realimentação. Este controlador calcula constantemente constantemente o erro variante no tempo que é a diferença entre o \textit{set-point} e o valor da variável de processo medida. Segue uma representação da malha de controle PI, com a fórmula do algoritmo:
 
 \begin{figure}[H]
     \centering
@@ -140,7 +140,8 @@ O controlador Proporcional Integral (PI) é um mecanismo de controle em malha fe
     \label{fig:figura-pi-controller}
 \end{figure}
 
-Os dois valores de ajuste para o controlador PI são as constantes proporcional e integrativa. A constante proporcional é o que se chama de ganho do controlador, que irá apenas multiplicar a diferença entre o \textit{set point} e o valor da variável de processo medida. Já a constante integrativa é um multiplicador do erro proporcional, e um valor maior torna o controlador mais agressivo, de modo a diminuir o tempo de resposta ao passo que aumenta a instabilidade \cite{Apmonitor}.
+Na figura, o erro variante no tempo é denotado por $E_\mathrm{rr}$.
+Os dois valores de ajuste para o controlador PI são as constantes proporcional ($K_p$)  e integrativa ($K_i$). A constante proporcional é o que se chama de ganho do controlador, que irá apenas multiplicar a diferença entre o \textit{set point} e o valor da variável de processo medida. Já a constante integrativa é um multiplicador do erro proporcional, e um valor maior torna o controlador mais agressivo, de modo a diminuir o tempo de resposta ao passo que aumenta a instabilidade \cite{Apmonitor}.
 
 %%\null
 %%\vfill
