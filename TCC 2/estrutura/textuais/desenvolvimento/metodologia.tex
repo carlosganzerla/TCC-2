@@ -80,8 +80,7 @@ Diferentemente do projeto do circuito  da figura \ref{fig:figura-inverter}, o ci
 \section{\texit{FONTE DE ALIMENTAÇÃO}}
 \label{sec:font}
 
-Para alimentar os diferentes componentes do sistema, utilizou-se um projeto de fonte de alimentação isolada, com potência de 10W. A fonte utilizada possui saídas de 3,3V e 15V, utilizando reguladores chaveados para manter o sinal de tensão o mais constante possível. A equipe fez uma modificação no circuito para energizar o inversor que faz o controle de potência do magnetron com a tensão após a ponte de diodos. Outra mudança feita foi o posicionamento de um resistor \textit{shunt}, ligado ao neutro do circuito. Este componente atua como um sensor de corrente que é usado na função de transferência da realimentação da planta. A alimentação do inversor é feita com o sinal de tensão que de saída do indutor ligado ao retificador de onda completa. Também foi adicionada uma série de resistores que são utilizados em um divisor de tensão que é ligado à um conversor AD do microcontrolador. A tensão medida no resistor R20 é utilizada no cálculo da potência utilizada pelo circuito. A figura abaixo mostra o esquemático da fonte de alimentação utilizada:
-
+ Para alimentar os diferentes componentes do sistema, utilizou-se um projeto de fonte de alimentação isolada, com potência de 10W. A fonte utilizada possui saídas de 3,3V e 15V, utilizando reguladores chaveados para manter o sinal de tensão o mais constante possível. A equipe fez uma modificação no circuito para energizar o inversor que faz o controle de potência do magnetron com a tensão após a ponte de diodos. Outra mudança feita foi o posicionamento de um resistor \textit{shunt}, ligado ao neutro do circuito. Este componente atua como um sensor de corrente que é usado na função de transferência da realimentação da planta. A alimentação do inversor é feita com o sinal de tensão que de saída do indutor ligado ao retificador de onda completa. Também foi adicionada uma série de resistores que são utilizados em um divisor de tensão que é ligado à um conversor AD do microcontrolador. A tensão medida no resistor R20 é utilizada no cálculo da potência utilizada pelo circuito. Na fonte, foram utilizados quatros CIs especializados. O CI TNY274PN é um regulador chaveado e isolado, que permite abaixar para o valor desejado de 15 V uma ampla faixa tensão de entrada DC. Este dispositivo é um dos mais flexíveis do mercado, permitindo o uso de uma maior potência na tensão de entrada, reduzindo os custos com o transformador da fonte. Para chegar à tensão de 3,3 V, foi utilizado o CI L78L33AC, que é um regulador de tensão fixa. Este CI emprega um limitador de corrente que inibe qualquer sobrecarga que a fonte venha a apresentar na saída. Para fazer o acoplamento do regulador chaveado, foi utilizado o optoacoplador PC817. Este modelo é um dos mais comuns para aplicações que precisam isolar dois circuitos com diferentes potências e impedâncias. Para proteger o circuito, foi usado o CI TL431, que exerce a mesma função de um diodo zener, protegendo o circuito em uma eventual sobrecarga. A figura abaixo mostra o esquemático da fonte de alimentação utilizada:
 
 \begin{figure}[H]
    \centering
@@ -259,8 +258,9 @@ A função principal consiste apenas na inicialização dos periféricos do circ
 
 No algoritmo, parâmetros de mínimos e máximos foram definidos de modo a possibilitar o controle do \textit{set-point} dentro de alguns limites de potência. Definiu-se que a frequência de chaveamento deve estar entre 20 kHz e 45 kHz, devido ao limite audível e a resposta em frequência dos componentes. Já quanto à potência, foi estipulado que deve estar entre 400 W e 1200 W, para possibilitar uma operação segura e contínua do magnetron.
 
-\subsubsection{Algoritmo do controlador PI}
-O algoritmo do controlador PI faz, de forma digital, o controle do \textit{set point} através da soma acumulada dos valores anteriores multiplicados pelas constantes de proporção integral somados com a componente proporcional da fórmula. O algoritmo foi implementado na linguagem \textit{Assembly} para uma melhor performance, porém será exposto neste trabalho em C, da maneira em que foi idealizado:
+\subsubsection{Controlador PI}
+Para determinar o controlador do projeto, foram considerados controladores que pudessem responder de forma adequado à uma variável de processo que é regida por uma função de transferência que é muito difícil de se determinar. Assim, decidiu-se que, em vez de calcular um controlador com função de transferência específica para a planta, iria-se utilizar um controlador mais flexível. Devido às altas frequências do circuito, e a natureza das grandezas que se deseja controlar, o controlador PI foi utilizado neste projeto. Este controlador permite um controle rápido, estável e apresenta menor \textit{overshoot} em relação à um controlador integral, além de possuir erro zero em estado estacionário, no caso de se desejar utilizar potência constante. O algoritmo do controlador PI faz, de forma digital, o controle do \textit{set point} através da soma acumulada dos valores anteriores multiplicados pelas constantes de proporção integral somados com a componente proporcional da fórmula. (Pendete parte dos valores K).
+O algoritmo foi implementado na linguagem \textit{Assembly} para uma melhor performance, porém será exposto neste trabalho em C, da maneira em que foi idealizado:
 
 \begin{figure}[H]
     \centering
@@ -305,30 +305,59 @@ Por ser um componente de alta potência que pode causar danos ao circuito ou a t
     \label{fig:figura-mwo_flow}
 \end{figure}
 
-\subsubsection{Algoritmo de leitura do \textit{shunt} e da tensão de barramento}
-Este algoritmo realiza as leituras dos valores medidos pelos conversores AD, e atribui os valores adquiridos à variáveis internas do sistema. Para adquirir os valores, o programa faz uma média móvel do valor medido e utiliza o resultado para determinar o valor da potência. Esta potência então é lida pelo controlador PI para fazer o controle da potência de saída do magnetron. Segue o algoritmo desenvolvido:
+A figura a seguir detalha o código implementado:
 
 \begin{figure}[H]
     \centering
-    \caption{Algorítmo desenvolvido}
+    \caption{Impelementação do algoritmo de acionamento}
+    \includegraphics[width=1\textwidth]{./dados/figuras/func_mwo}
+    \fonte{Autoria própria (2019)}
+    \label{fig:figura-func_mwo}
+\end{figure}
+
+\subsubsection{Algoritmo de leitura do \textit{shunt} e da tensão de barramento}
+Este algoritmo realiza as leituras dos valores medidos pelos conversores AD, e atribui os valores adquiridos à variáveis internas do sistema. Um temporizador é constantemente verificado para averiguar a necessidade de se tomar uma amostra. A frequência de amostragem foi definida em  Para adquirir os valores, o programa faz uma média móvel do valor medido e utiliza o resultado para determinar o valor da potência. Esta potência então é lida pelo controlador PI para fazer o controle da potência de saída do magnetron. Segue o algoritmo desenvolvido:
+
+\begin{figure}[H]
+    \centering
+    \caption{Fluxograma do algoritmo}
+    \includegraphics[width=1\textwidth]{./dados/figuras/flow_ad}
+    \fonte{Autoria própria (2019)}
+    \label{fig:figura-func_analog}
+\end{figure}
+
+
+\begin{figure}[H]
+    \centering
+    \caption{Implementação do algoritmo}
     \includegraphics[width=1\textwidth]{./dados/figuras/func_analog}
     \fonte{Autoria própria (2019)}
     \label{fig:figura-func_analog}
 \end{figure}
 
-A função \textit{AnalogCalculateAverage} calcula a média móvel tanto do sensor de corrente quando do sensor de tensão. Para diferenciar um do outro, apenas recebe um parâmetro com a identificação de qual que se quer fazer a média. A figura abaixo detalha a função desenvolvida:
+
+
+Para calcular a média móvel, foi desenvolvida uma função que calcula tanto do sensor de corrente quando do sensor de tensão. Para diferenciar um do outro, apenas recebe um parâmetro com a identificação de qual que se quer fazer a média. A figura abaixo detalha a implementação em C da função desenvolvida:
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1\textwidth]{./dados/figuras/func_average}
     \caption{Função desenvolvida}
+    \includegraphics[width=1\textwidth]{./dados/figuras/func_average}
     \fonte{Autoria própria (2019)}
     \label{fig:figura-func_average}
 \end{figure}
 
 
 \subsection{Interface de comunicação}
-O algoritmo desta função recebe como entrada as larguras de pulso medidas pelo manipulador da interrupção de \textit{input capture} e um sinal com metade da frequência e mesmo ciclo de trabalho, que é lido no no próprio microcontrolador. Como saída, o programa envia um sinal de frequência de 220 Hz, que contém o sinal do status do sistema, o qual sinaliza se o \textit{feedback} está funcionando ou não. No algoritmo, através das larguras de pulso medidas pelo manipulador da interrupção, é calculado o percentual de potência máxima solicitada pelo controlador. Ou seja, esta função controla o \textit{set point} da planta. A figura abaixo mostra a função desenvolvida no detalhe:
+O algoritmo desta função recebe como entrada as larguras de pulso medidas pelo manipulador da interrupção de \textit{input capture} e um sinal com metade da frequência e mesmo ciclo de trabalho, que é lido no no próprio microcontrolador. Como saída, o programa envia um sinal de frequência de 220 Hz, que contém o sinal do status do sistema, o qual sinaliza se o \textit{feedback} está funcionando ou não. Este algoritmo contém dois estados de operação: Aguardando início e recebendo pacotes. No primeiro estado, a função verifica um temporizador que é reiniciado pelo sinal de controle. Quando o temporizador indica que há recebimento de sinal, o sistema é colocado no segundo estado. Neste estado, o algoritmo, através das larguras de pulso medidas pelo manipulador da interrupção, calcula o percentual de potência máxima solicitada pelo controlador. Então, o programa atribui um novo ciclo de trabalho ao magnetron de acordo com o percentual calculado. Ou seja, esta função controla o \textit{set point} da planta. A figuras abaixo mostram o fluxograma e a respectiva implementação em C:
+\begin{figure}[H]
+    \centering
+    \caption{Fluxograma desenvolvido}
+    \includegraphics[width=1\textwidth]{./dados/figuras/flow_comm}
+    \fonte{Autoria própria (2019)}
+    \label{fig:figura-func_comm}
+\end{figure}
+
 
 \begin{figure}[H]
     \centering
