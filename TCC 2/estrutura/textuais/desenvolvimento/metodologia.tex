@@ -235,11 +235,103 @@ A montagem completa utilizou um forno microondas da marca Panasonic do ano 1995.
 Para fazer o controle de potência de saída do magnetron, foi projetada uma planta que possibilita o ajuste da potência ao \textit{set point} requerido. Para tal, foram desenvolvidos circuitos e algoritmos para microcontrolador de modo que o controle fosse realizado através do chaveamento dos IGBTs, utilizando realimentação de corrente pelo resistor \textit{shunt}. A estratégia de controle adotada foi o uso de um controlador proporcional integral (PI). Para controlar a potência de saída, o microcontrolador chaveia dois IGBTs, variando dois parâmetros: ciclo de trabalho e frequência do pulso. Para a leitura do valor do \textit{shunt}, foi utilizado um conversor AD e um amplificador operacional, ambos integrados ao microcontrolador. Para medir a tensão do barramento de tensão da rede retificada (Vbus), também foi utilizado um conversor AD integrado ao microcontrolador. Esta tensão é usada tanto no cálculo realizado para o controle potência de saída quanto para medir a potência utilizada pelo circuito.
 
 \subsection{Condicionamento de sinal do \textit{shunt}}
-Para condicionar o sinal dos terminais do \textit{shunt}, foram utilizados o amplificador operacional integrado ao microcontrolador e o conversor AD, também integrado ao dispositivo. Alguns valores utilizados já são pré-determinados, utilizando valores que são considerados como valores recomendados pelo fabricante do microcontrolador nos \textit{datasheets} fornecidos. Para realizar este condicionamento, foram calculados os ganhos das entradas do amplificador operacional, bem como os coeficiente de ajuste que minimizam o erro da conversão da corrente analógica para digital. No cálculo, os valores de pico atribuídos à corrente que passa no resistor foram determinados arbitrariamente, levando em conta os valores máximos totais de corrente que irão passar pelo circuito e a conveniência da realização dos cálculos. O conversor AD possui 10 bits, logo, 1024 níveis de corrente. A tabela abaixo mostra o resultado dos cálculos dos ganhos do amplificador operacional e da conversão analógico digital:
+Para condicionar o sinal dos terminais do \textit{shunt}, foram utilizados o amplificador operacional integrado ao microcontrolador e o conversor AD, também integrado ao dispositivo. Alguns valores utilizados já são pré-determinados, utilizando valores que são considerados como valores recomendados pelo fabricante do microcontrolador nos \textit{datasheets} fornecidos. Para realizar este condicionamento, foram calculados os ganhos das entradas do amplificador operacional, bem como os coeficiente de ajuste que minimizam o erro da conversão da corrente analógica para digital. No cálculo, os valores de pico atribuídos à corrente que passa no resistor foram determinados arbitrariamente, levando em conta os valores máximos totais de corrente que irão passar pelo circuito e a conveniência da realização dos cálculos. O conversor AD possui 10 bits, logo, 1024 níveis de corrente. Seja Ipkr a corrente de pico real em Ampères que passa pelo \textit{shunt}, Vdd a tensão em Volts de alimentação do circuito da figura \ref{fig:proj-shunt}, Vin+ e Vin- as tensões em Votlts das alimentações positiva e negativas do amplificador operacional integrado, G+, Gdd e G- os ganhos do amplificador em relação à Vin+, Vdd e Vin- respectivamente e Ipkm a corrente de pico medida pelo microcontrolador. A tabela a seguir mostra o resultado dos da conversão analógico digital, com o respectivo erro em Ampères:
+
+\begin{table}[H]
+    \centering
+    \caption{Resultados dos cálculos da conversão}
+    \begin{tabular}{|l|l|l|l|l|l|l|l|l|l|l|} 
+\hline
+Ipkr	&Vdd	&Vin+	&Vin-	&Vout		&G+		&Gdd	&G-	&Nível	&Ipkm	&Erro\\\hline	
+0,10	&3,30	&0,44	&0,00	&1,65277	&3,7701	&0,5	&-2,7701	&512	&0,10	&0,00\\\hline
+0,20	&3,30	&0,44	&0,00	&1,65554	&3,7701	&0,5	&-2,7701	&513	&0,20	&0,00\\\hline
+0,30	&3,30	&0,44	&0,00	&1,65831	&3,7701	&0,5	&-2,7701	&514	&0,30	&0,00\\\hline
+0,40	&3,30	&0,44	&0,00	&1,66108	&3,7701	&0,5	&-2,7701	&514	&0,30	&0,10\\\hline
+0,50	&3,30	&0,44	&0,00	&1,66385	&3,7701	&0,5	&-2,7701	&515	&0,50	&0,00\\\hline
+0,60	&3,30	&0,44	&0,00	&1,66662	&3,7701	&0,5	&-2,7701	&516	&0,60	&0,00\\\hline
+0,70	&3,30	&0,44	&0,00	&1,66939	&3,7701	&0,5	&-2,7701	&517	&0,70	&0,00\\\hline
+0,80	&3,30	&0,44	&0,00	&1,67216	&3,7701	&0,5	&-2,7701	&518	&0,80	&0,00\\\hline
+0,90	&3,30	&0,44	&0,00	&1,67493	&3,7701	&0,5	&-2,7701	&519	&0,90	&0,00\\\hline
+1,00	&3,30	&0,45	&0,00	&1,67770	&3,7701	&0,5	&-2,7701	&520	&1,00	&0,00\\\hline
+2,00	&3,30	&0,45	&0,00	&1,70540	&3,7701	&0,5	&-2,7701	&528	&2,00	&0,00\\\hline
+3,00	&3,30	&0,46	&0,00	&1,73311	&3,7701	&0,5	&-2,7701	&537	&3,00	&0,00\\\hline
+4,00	&3,30	&0,47	&0,00	&1,76081	&3,7701	&0,5	&-2,7701	&545	&4,00	&0,00\\\hline
+5,00	&3,30	&0,47	&0,00	&1,78851	&3,7701	&0,5	&-2,7701	&554	&5,00	&0,00\\\hline
+6,00	&3,30	&0,48	&0,00	&1,81621	&3,7701	&0,5	&-2,7701	&563	&6,10	&0,10\\\hline
+7,00	&3,30	&0,49	&0,00	&1,84391	&3,7701	&0,5	&-2,7701	&571	&7,00	&0,00\\\hline
+8,00	&3,30	&0,50	&0,00	&1,87161	&3,7701	&0,5	&-2,7701	&580	&8,00	&0,00\\\hline
+9,00	&3,30	&0,50	&0,00	&1,89931	&3,7701	&0,5	&-2,7701	&588	&9,00	&0,00\\\hline
+10,00	&3,30	&0,51	&0,00	&1,92701	&3,7701	&0,5	&-2,7701	&597	&10,00	&0,00\\\hline
+11,00	&3,30	&0,52	&0,00	&1,95471	&3,7701	&0,5	&-2,7701	&605	&10,90	&0,10\\\hline
+12,00	&3,30	&0,53	&0,00	&1,98241	&3,7701	&0,5	&-2,7701	&614	&12,00	&0,00\\\hline
+13,00	&3,30	&0,53	&0,00	&2,01011	&3,7701	&0,5	&-2,7701	&623	&13,00	&0,00\\\hline
+14,00	&3,30	&0,54	&0,00	&2,03781	&3,7701	&0,5	&-2,7701	&631	&14,00	&0,00\\\hline
+15,00	&3,30	&0,55	&0,00	&2,06552	&3,7701	&0,5	&-2,7701	&640	&15,00	&0,00\\\hline
+16,00	&3,30	&0,56	&0,00	&2,09322	&3,7701	&0,5	&-2,7701	&648	&16,00	&0,00\\\hline
+17,00	&3,30	&0,56	&0,00	&2,12092	&3,7701	&0,5	&-2,7701	&657	&17,00	&0,00\\\hline
+-0,10	&3,30	&0,44	&0,00	&1,64723	&3,7701	&0,5	&-2,7701	&510	&-0,10	&0,00\\\hline
+-1,00	&3,30	&0,43	&0,00	&1,62230	&3,7701	&0,5	&-2,7701	&502	&-1,00	&0,00\\\hline
+-2,00	&3,30	&0,42	&0,00	&1,59460	&3,7701	&0,5	&-2,7701	&494	&-2,00	&0,00\\\hline
+-3,00	&3,30	&0,42	&0,00	&1,56690	&3,7701	&0,5	&-2,7701	&485	&-3,00	&0,00\\\hline
+-3,90	&3,30	&0,41	&0,00	&1,54197	&3,7701	&0,5	&-2,7701	&478	&-3,80	&0,10\\\hline
+-4,00	&3,30	&0,41	&0,00	&1,53920	&3,7701	&0,5	&-2,7701	&477	&-4,00	&0,00\\\hline
+-5,00	&3,30	&0,40	&0,00	&1,51150	&3,7701	&0,5	&-2,7701	&468	&-5,00	&0,00\\\hline
+-6,00	&3,30	&0,39	&0,00	&1,48380	&3,7701	&0,5	&-2,7701	&459	&-6,10	&0,10\\\hline
+-7,00	&3,30	&0,39	&0,00	&1,45610	&3,7701	&0,5	&-2,7701	&451	&-7,00	&0,00\\\hline
+-8,00	&3,30	&0,38	&0,00	&1,42840	&3,7701	&0,5	&-2,7701	&442	&-8,00	&0,00\\\hline
+-9,00	&3,30	&0,37	&0,00	&1,40070	&3,7701	&0,5	&-2,7701	&434	&-9,00	&0,00\\\hline
+-10,00	&3,30	&0,36	&0,00	&1,37300	&3,7701	&0,5	&-2,7701	&425	&-10,00	&0,00\\\hline
+-11,00	&3,30	&0,36	&0,00	&1,34529	&3,7701	&0,5	&-2,7701	&417	&-10,90	&0,10\\\hline
+-12,00	&3,30	&0,35	&0,00	&1,31759	&3,7701	&0,5	&-2,7701	&408	&-12,00	&0,00\\\hline
+-13,00	&3,30	&0,34	&0,00	&1,28989	&3,7701	&0,5	&-2,7701	&399	&-13,00	&0,00\\\hline
+-15,00	&3,30	&0,33	&0,00	&1,23449	&3,7701	&0,5	&-2,7701	&382	&-15,00	&0,00\\\hline
+-17,00	&3,30	&0,31	&0,00	&1,17909	&3,7701	&0,5	&-2,7701	&365	&-17,00	&0,00\\\hline
+-18,00	&3,30	&0,31	&0,00	&1,15139	&3,7701	&0,5	&-2,7701	&356	&-18,10	&0,10\\\hline
+    \end{tabular}
+    \label{table-shunt}
+\end{table}
 
 \subsection{Leitura de tensão no microcontrolador}
-Para medir o valor da tensão no programa do microcontrolador, foi necessário calcular os parâmetros para conversão da tensão analógica em digital. No cálculo, foram considerados os valores nos quais a tensão de pico de barramento varia (0 V à 180 V). Para minimizar o erro gerado pelas conversões, foram calculados coeficientes de ajuste. Com estes coeficientes, o erro gerado pela conversão foi nulo em todos os valor atribuídos à tensão de barramento Foi elaborada uma planilha no software \textit{excel} que calcula o nível digital do sinal para um determinado valor de Vbus. Estes valores foram utilizados para se obter os parâmetros de conversão que geram um erro aceitável. Uma compilação dos resultados obtidos encontra-se na tabela abaixo:
+Para medir o valor da tensão no programa do microcontrolador, foi necessário calcular os parâmetros para conversão da tensão analógica em digital. No cálculo, foram considerados os valores nos quais a tensão de pico de barramento varia (0 V à 180 V). Para cada valor atribuído de tensão de barramento (Vbus), foi calculado a tensão medida pelo microcontrolador (Vm) e o correspondente nível digital, considerando 10 bits de resolução. Então, o nível digital foi convertido e foi calculado o erro gerado pela conversão. Foi elaborada uma planilha no software \textit{excel} que calcula o nível digital do sinal para um determinado valor de Vbus. Estes valores foram utilizados para se obter os parâmetros de conversão que geram um erro aceitável. O erro máximo gerado pelas conversões foi 2 V. Uma compilação dos resultados obtidos encontra-se na tabela abaixo:
 
+\begin{table}[H]
+    \centering
+    \caption{Resultados dos cálculos da conversão}
+    \begin{tabular}{| m{6em} | m{4em} | m{6em} | m{7em} | m{4em} | } 
+    \hline
+     Vbus real (V)&  Vm (V)&  Nível Digital&  Vbus medido (V)&  Erro (V)\\
+     \hline
+		1	&0,00606	&1		&1		&0\\\hline
+		2	&0,01212	&3		&2		&0\\\hline
+		3	&0,01818	&5		&3		&0\\\hline
+		4	&0,02424	&7		&4		&0\\\hline
+		5	&0,03030	&9		&5		&0\\\hline
+		6	&0,03636	&11		&6		&0\\\hline
+		7	&0,04242	&13		&7		&0\\\hline
+		8	&0,04848	&15		&8		&0\\\hline
+		9	&0,05455	&16		&8		&1\\\hline
+		10	&0,06061	&18		&9		&1\\\hline
+		20	&0,12121	&37		&19		&1\\\hline
+		30	&0,18182	&56		&29		&1\\\hline
+		40	&0,24242	&75		&39		&1\\\hline
+		50	&0,30303	&93		&49		&1\\\hline
+		60	&0,36364	&112	&59		&1\\\hline
+		70	&0,42424	&131	&69		&1\\\hline
+		80	&0,48485	&150	&79		&1\\\hline
+		90	&0,54545	&169	&89		&1\\\hline
+		100	&0,60606	&187	&98		&2\\\hline
+		110	&0,66667	&206	&108	&2\\\hline
+		120	&0,72727	&225	&118	&2\\\hline
+		130	&0,78788	&244	&128	&2\\\hline
+		140	&0,84848	&263	&138	&2\\\hline
+		150	&0,90909	&281	&148	&2\\\hline
+		160	&0,96970	&300	&158	&2\\\hline
+		170	&1,03030	&319	&168	&2\\\hline
+		180	&1,09091	&338	&178	&2\\
+     \hline
+    \end{tabular}
+    \label{table-vbus}
+\end{table}
 
 \subsection{Algoritmo de controle}
 Para realizar o controle propriamente dito, foi desenvolvido um algoritmo de controle, que recebe como parâmetros de entrada corrente do \textit{shunt}, a tensão do barramento e, quando aplicável, os sinais de controle e status do circuito de comunicação. A saída do algoritmo consiste nos pulsos ligados às portas do IGBTs, que fazem o chaveamento dos componentes. O controlador desenvolvido foi do tipo PI, que de forma digital controla dois parâmetros dos pulsos da porta dos IGBTs: a frequência do pulso e o ciclo de trabalho.
