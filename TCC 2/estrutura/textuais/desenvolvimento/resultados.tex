@@ -2,15 +2,74 @@
 
 \chapter{APRESENTAÇÃO E ANÁLISE DE RESULTADOS}
 
-Aqui será detalhado os resultados obtidos com o funcionamento do circuito desenvolvido integrado à uma forno microondas convencional da marca Panasonic. Nesta capítulo será descrito o funcionamento prático do circuito, exposto o resultado da medições de parâmetros que avaliam a performance e feitas comparações com os parâmetros do circuito ferrorressonante, disponíveis na literatura. 
+Aqui será detalhado os resultados obtidos com o funcionamento do circuito desenvolvido integrado à um forno microondas convencional da marca Panasonic. Nesta capítulo será descrito o funcionamento prático do circuito, expondo o resultado da medições de parâmetros que avaliam a performance e fazendo comparações com os parâmetros do circuito ferrorressonante, os quais estão disponíveis na literatura. 
 
 
 \section{Sistema em Funcionamento}
-A placa original do aparelho foi removida e trocada pela placa desenvolvida, ligando-se todos os fios que conectam o circuito projetado à rede e ao magnetron maneira similar à original. Para acionar o circuito, foi utilizada a interface já presente no forno, configurando o nível percentual de potência e o tempo de cozimento de acordo com os experimentos realizados. Para testar o funcionamento, a equipe acionou o circuito em diferentes configurações de potência, medindo-se as formas de onda em diferentes pontos para demonstrar o funcionamento prático do sistema. As subseções abaixo irão descrever o funcionamento prático do sistema
+A placa original do aparelho foi removida e trocada pela placa desenvolvida, ligando-se todos os fios que conectam o circuito projetado à rede e ao magnetron maneira similar à original. Para acionar o circuito, foi utilizada a interface já presente no forno, configurando o nível percentual de potência e o tempo de cozimento de acordo com os experimentos realizados. Para testar o funcionamento, a equipe acionou o circuito em diferentes configurações de potência, medindo-se as formas de onda em diferentes pontos para demonstrar o funcionamento prático do sistema. As subseções a seguir irão descrever o funcionamento prático do sistema.
 
-\subsection{Tensão, corrente e potência}
+\subsection{Corrente e potência}
+A fim de se verificar o funcionamento correto do circuito montado, as formas da corrente no \textit{shunt} foi verificada com um osciloscópio digital. A figura abaixo mostra o resultado obtido com o circuito operando em potência máxima:
+
+\begin{figure}[H]
+    \centering
+    \caption{Formas de onda da tensão e corrente}
+    \includegraphics[width=0.8\textwidth]{./dados/figuras/onda_corrente}
+    \fonte{Autoria própria (2019)}
+    \label{fig:figura-onda_corrente}
+\end{figure}
+
+Na figura, a forma de onda azul (canal 2) é a corrente no \textit{shunt}, enquanto a outra forma de onda, em amarelo (canal 1) é a tensão da rede. Como pode-se observar, o valor da corrente é muito elevado, atingindo um valor RMS de 14,4 A.  A medida que o nível de potência varia, maior o valor RMS da corrente e mais a forma de onda tende a suavizar a curvatura que tem em direção ao eixo horizontal. A forma de onda segue o mesmo ciclo que o sinal da tensão da rede, tendo um \textit{ripple} extremamente elevado. Este \textit{ripple} nada mais é que a consequência do forte ruído gerado pelas emissões do magnetron. Saleinta-se que o ambiente do experimento não era controlado, e que o chassi metálico do forno não estava fechado, o que contribui também para distorções na forma de onda.
+
+Para medir a potência consumida pelo circuito, foi utilizado um medidor de energia elétrica comercial portátil, no qual se conecta a alimentação do forno, enquanto a alimentação do medidor é ligada na tomada no lugar do aparelho. A figura abaixo mostra a leitura obtida no mesmo experimento:
+
+\begin{figure}[H]
+    \centering
+    \caption{Leitura de potência obtida}
+    \includegraphics[width=0.8\textwidth]{./dados/figuras/medida_potencia_full}
+    \fonte{Autoria própria (2019)}
+    \label{fig:figura-medida_potencia_full}
+\end{figure}
+
+A leitura obtida, como pode-se notar, é de 1715 W. Ao calcular-se a potência teórica pelos valores RMS medidos na figura \ref{fig:figura-onda_corrente}, obtém-se 1814 W. Tem-se uma pequena diferença, que ocorre devido ao elevado ruído de alta frequência detectado na forma de onda da corrente, que afeta a precisão da medição. De forma geral, tem-se que a potência obtida pelo experimento está dentro do que foi esperado pela equipe.
 
 \subsection{Chaveamento dos IGBTs}
+O chaveamento dos IGBTs é o que faz efetivamente o controle da potência do magnetron, bloqueando o sinal de tensão no primário quando os dispositivos são colocados em \textit{off}. Para realizar o controle, a planta desenvolvida controla dois parâmetros do sinal da porta do dispositivo: frequência e ciclo de trabalho. As figuras abaixo mostram o circuito operando em três configurações. Em amarelo, no canal 1 é mostrado o sinal do IGBT. Em azul, no canal 2, é mostrada a tensão de barramento, enquanto no canal 3, em rosa, mostra-se o sinal que vai para o conversor AD de tensão:
+
+\begin{figure}[H]
+    \centering
+    \caption{Formas de onda: caso 1}
+    \includegraphics[width=0.8\textwidth]{./dados/figuras/onda_controller_1}
+    \fonte{Autoria própria (2019)}
+    \label{fig:figura-onda_controller_1}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \caption{Formas de onda: caso 2}
+    \includegraphics[width=0.8\textwidth]{./dados/figuras/onda_controller_2}
+    \fonte{Autoria própria (2019)}
+    \label{fig:figura-onda_controller_2}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \caption{Formas de onda: caso 3}
+    \includegraphics[width=0.8\textwidth]{./dados/figuras/onda_controller_3}
+    \fonte{Autoria própria (2019)}
+    \label{fig:figura-onda_controller_3}
+\end{figure}
+
+Nas figuras mostradas, tem-se três situações: 
+\bigskip
+\begin{itemize}
+    \item Ciclo de trabalho 70\%, frequência de 32 kHz e tensão do ADC de 1,16 V;
+    \item Ciclo de trabalho 60\%, frequência de 20 kHz e tensão do ADC de 199 mV;
+    \item Ciclo de trabalho 60\%, frequência de 20 kHz e tensão do ADC de 786 mV.
+\end{itemize}
+\bigskip
+
+Cada situação mostra uma diferente decisão tomada pelo \textit{firmware} desenvolvido. A planta desenvolvida, através da realimentação de \textit{corrente} e cálculo da potência com a medição do conversor AD, determinou o valor do ciclo e trabalho e frequência utilizada no chaveamento para regular a potência no valor estabelecido. Um maior ciclo de trabalho não implica necessariamente numa maior potência, visto que a frequência do sinal exerce um papel fundamental na determinação da potência de saída, dadas às características do circuito.
 
 \subsection{Sinais de controle e status}
 
@@ -18,7 +77,7 @@ A placa original do aparelho foi removida e trocada pela placa desenvolvida, lig
 \section{Medições de parâmetros}
 Para comparar o desempenho do circuito desenvolvido com uma fonte ferrorressonante tradicional, foram medidos três parâmetros essenciais para se possibilitar uma discussão válida sobre o tema: eficiência, fator de potência e dimensões físicas, incluindo massa, altura, largura e comprimento. 
 
-\section{Eficiência}
+\subsection{Eficiência}
 A eficiência do forno microondas pode ser avaliada de forma geral como a performance do circuito de alimentação do magnetron. Este parâmetro pode ser obtido fazendo-se uma relação entre o calor absorvido pelo líquido dentro na câmara de cozimento do forno e a energia elétrica consumida pelo circuito.
 Para avaliar a performance, a equipe repetiu um experimento que é utilizado pelo INMETRO para determinar a eficiência de fornos microondas, o qual está detalhado em \cite{Inmetro}. O experimento consiste em esquentar 1 litro de água em um determinado tempo. A água utilizada para este fim estava armazenada em um recipiente aberto de vidro, pesando 400(?)g. Antes da realização da experiência, a equipe aqueceu o recipiente vazio para determinar se o mesmo aquecia de forma significativa sem a presença de água, a fim de verificar se o recipiente poderia interferir nas medições. Inicialmente o recipiente se encontrava a X °C. Após colocá-lo no microondas por 60 (?) segundos, o recipiente apresentou temperatura de X + dx ºC. Logo a variação foi de dx ºC, a qual não acarreta em impactos significativos na precisão das medidas.
 Inicialmente mediu-se a temperatura da água no recipiente, utilizando-se um termopar industrial comum. Feito isso, o recipiente foi colocado no forno e acionado em potência 80\% durante 60(?) segundos. Então, retirou-se a o recipiente do aparelho e com o termopar mediu-se a temperatura. Através das fórmulas descritas em cite, mediu-se a eficiência do circuito. No total, foram realizados dois experimentos, cada qual possuindo uma temperatura da água distinta. As figuras abaixo mostra a imagem das leituras do termopar antes e depois de cada experimento, enquanto a tabela z resume os resultados obtidos com as leituras
@@ -26,4 +85,18 @@ Inicialmente mediu-se a temperatura da água no recipiente, utilizando-se um ter
 (tablies go there)
 
 
-Da tabela z, percebe-se que o valor da eficiência obtida pelos experimentos é muito próximo. Isto demonstra que o circuito possui um comportamento regular, apresentando pouca variação conforme o aumento de temperatura da água. Este comportamento é relevante pois mostra que o calor transmitido mantém-se constante em determinada faixa de temperatura, sugerindo que a uniformidade do aquecimento tende a se manter a mesma ao passo que a temperatura aumenta. 
+Da tabela z, percebe-se que o valor da eficiência obtida pelos experimentos é muito próximo. Isto demonstra que o circuito possui um comportamento regular, apresentando pouca variação conforme o aumento de temperatura da água. Este comportamento é relevante pois mostra que o calor transmitido mantém-se constante em determinada faixa de temperatura, sugerindo que a uniformidade do aquecimento tende a se manter a mesma ao passo que a temperatura aumenta.
+
+\subsection{Fator de Potência}
+
+Na medição o fator de potência,  utilizou-se o mesmo dispositivo usado para medir a potência mostrado na figura k. O circuito foi ligado em diversas configurações de potência, medindo-se o fator de potência de cada configuração em um minuto de aquecimento. A tabela abaixo contém os resultados obtidos:
+
+\subsection{Dimensões físicas}
+Por último, as dimensões físicas da placa foram medidas, com uma régua milimétrica e uma balça de precisão. A tabela j mostra os valores medidos de cada dimensão:
+
+\section{Comparativo com Circuito Ferrorressonante}
+
+Para fazer a comparação, foram levantados dados de um circuito ferrorressonante tradicional contido em um modelo de forno do final da década de 1990 (cite).  A tabela compara  o circuito desenvolvido com a fonte tradicional:
+
+
+ Comparando-se os valores dos parâmetros do circuito ferrorressonante com os valores obtidos no projeto, percebe-se como a placa desenvolvida apresenta desempenho superior em todos eles. Com altura e peso consideravelmente menores, o circuito desenvolvido é mais flexível, permitindo o uso em diferentes aparelhos, otimizando o espaço disponível e reduzindo o peso total. O projeto também apresentou maior fator de potência e eficiência, aproveitando melhor a energia da rede, causando menos impactos, e reduzindo o consumo total, convertendo maior quantidade de energia em calor.
