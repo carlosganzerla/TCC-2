@@ -28,10 +28,10 @@ O objetivo geral deste projeto é desenvolver um circuito de controle de potênc
 \label{sec:objetivosEspecificos}
 
 \begin{itemize}
-    \item Desenvolver um circuito inversor para controlar a tensão de entrada do magnetron, de modo que varie a potência de saída, variando conforme demanda do magnetron e decisões do firmware.
-    \item Desenvolver uma solução de firmware que seja capaz de realizar o controle de potência do forno microondas através da realimentação de corrente. 
-    \item Desenvolver uma fonte de tensão que seja capaz de alimentar de forma robusta os componentes de baixa potência e os componentes de alta potência, garantindo integridade do circuito e do usuário. 
-    \item Realizar simulações da fonte controlável, de modo a encontrar a solução mais eficaz para controlar a potência de saída do magnetron
+    \item Desenvolver um circuito inversor para controlar a tensão de entrada do magnetron, de modo que varie a potência de saída conforme as demandas do controlador;
+    \item Desenvolver uma solução de firmware que seja capaz de realizar o controle de potência do forno microondas através da realimentação de corrente;
+    \item Desenvolver uma fonte de tensão que seja capaz de alimentar de forma robusta os componentes de baixa potência e os componentes de alta potência, garantindo integridade do circuito e do usuário;
+    \item Realizar simulações da fonte controlável, de modo a encontrar a solução mais eficaz para controlar a potência de saída do magnetron;
     \item Dimensionar a solução conjunta de firmware e circuito de controle de maneira que este conjunto possa ser integrado a um forno microondas convencional.
 \end{itemize}
 
@@ -41,6 +41,6 @@ O objetivo geral deste projeto é desenvolver um circuito de controle de potênc
 
 A utilização de fornos microondas para fins de aquecimento é feita desde o fim da segunda guerra mundial. O consumo de produtos congelados feitos para aquecimento no microondas de tornou popular a partir da década de 1990, reduzindo drasticamente o tempo de cozimento em relação aos métodos tradicionais de aquecimento \cite{Ohlsson}. A vantagem do microondas é seu aquecimento rápido e volumétrico. Porém, a grande desvantagem é o aquecimento não uniforme. A interação complexa das microondas com as propriedades do alimento gera aquecimento desuniforme, o que pode afetar não só a segurança do alimento, mas também a qualidade \cite{Ma}.
 
-A solução proposta pelo projeto dará foco à uma solução que permita o controle da potência utilizada pelo forno microondas para aquecer o alimento de maneira mais uniforme, fazendo com que a energia seja fornecida de maneira inteligente, reduzindo o consumo total. O controle de potência também possibilitará o cozimento mais rápido de alguns alimentos, diminuindo assim também o custo energético.
+A solução proposta pelo projeto dará foco à uma solução que permita o controle da potência utilizada pelo forno microondas para aquecer o alimento de maneira mais eficiente, fazendo com que a energia seja fornecida de maneira inteligente, reduzindo o consumo total. O controle de potência também possibilitará o cozimento mais rápido de alguns alimentos, diminuindo assim também o custo energético.
 
-O circuito será desenvolvido de modo a ter um tamanho reduzido em relação aos circuitos tradicionais com acionadores ferro-ressonantes. Desta maneira, além do controle de potência, a solução irá providenciar a mesma funcionalidade do circuito tradicional com tamanho e peso reduzidos, podendo otimizar a maneira na qual o design do forno microondas é feito, e impactando diretamente no seu custo, tanto energético quanto financeiro.
+O circuito será desenvolvido de modo a ter um tamanho reduzido em relação aos circuitos tradicionais com acionadores ferro-ressonantes. Desta maneira, além do controle de potência, a solução irá providenciar a mesma funcionalidade do circuito tradicional com tamanho e peso reduzidos, otimizando o espaço do forno microondas e possibilitando um \textit{design} mais compacto.
