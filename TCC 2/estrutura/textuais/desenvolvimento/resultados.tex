@@ -2,7 +2,7 @@
 
 \chapter{APRESENTAÇÃO E ANÁLISE DE RESULTADOS}
 
-Aqui serão detalhados os resultados obtidos com o funcionamento do circuito desenvolvido integrado a um forno microondas convencional da marca Panasonic. Nesta capítulo será descrito o funcionamento prático do circuito, expondo o resultado da medições de parâmetros que avaliam a performance e fazendo comparações com os parâmetros do circuito ferrorressonante, os quais estão disponíveis na literatura. 
+Aqui serão detalhados os resultados obtidos com o funcionamento do circuito desenvolvido integrado a um forno microondas convencional da marca Panasonic. Nesta capítulo será descrito o funcionamento prático do circuito, expondo o resultado da medições de parâmetros que avaliam a performance e fazendo comparações com os parâmetros do circuito ferrorressonante original do forno microondas utilizado.
 
 
 \section{Sistema em Funcionamento}
@@ -31,7 +31,7 @@ Para medir a potência consumida pelo circuito, foi utilizado um medidor de ener
     \label{fig:figura-medida_potencia_full}
 \end{figure}
 
-A leitura obtida, como pode-se notar, é de 1715 W. Ao calcular-se a potência teórica pelos valores RMS medidos na figura \ref{fig:figura-onda_corrente}, obtém-se 1814 W. Para este experimento não foi feita uma calibração com os devidos equipamentos, e portanto não se tem uma precisão elevada para as medições. Outro fator que influencia na precisão, é o elevado ruído de alta frequência detectado na forma de onda da corrente, que também deteriora a qualidade da medição. Para este experimento, a equipe configurou o algoritmo de controle com uma potência máxima de 1700 W. Devido aos fatores prejudiciais à precisão do experimento, citados anteriormente, o valor real da potência atingida pode sofrer uma pequena alteração percentual. De forma geral, tem-se que a potência obtida pelo experimento está dentro do que foi esperado pela equipe, visto que em ambas as medições o valor medido não ultrapassou os 10\% de tolerância estabelecido pela equipe.
+A leitura obtida, como pode-se notar, é de 1715 W. Salienta-se que esta potência corresponde a soma da potência da alimentação do magnetron, da lâmpada e do motor do prato giratório dentro do forno. Pelo manual do aparelho, tem-se que a potência aproximada utilizada pelo motor e pela lâmpada é de 100 W. Ao calcular-se a potência teórica pelos valores RMS medidos na figura \ref{fig:figura-onda_corrente}, obtém-se 1814 W. Para este experimento não foi feita uma calibração com os devidos equipamentos, e portanto não se tem uma precisão elevada para as medições. Outro fator que influencia na precisão, é o elevado ruído de alta frequência detectado na forma de onda da corrente, que também deteriora a qualidade da medição. Para este experimento, a equipe configurou o algoritmo de controle com uma potência máxima de 1600 W, logo com potência máxima utilizada pelo forno de 1700 W. Devido aos fatores prejudiciais à precisão do experimento, citados anteriormente, o valor real da potência atingida pode sofrer uma pequena alteração percentual. De forma geral, tem-se que a potência obtida pelo experimento está dentro do que foi esperado pela equipe, visto que em ambas as medições o valor medido não ultrapassou os 10\% de tolerância estabelecido pela equipe.
 
 \subsection{Chaveamento dos IGBTs}
 O chaveamento dos IGBTs é o que faz efetivamente o controle da potência do magnetron, bloqueando o sinal de tensão no primário quando os dispositivos são colocados em \textit{off}. Para realizar o controle, a planta desenvolvida controla dois parâmetros do sinal da porta do dispositivo: frequência e ciclo de trabalho. As figuras abaixo mostram o circuito operando em três configurações. Em amarelo, no canal 1 é mostrado o sinal do IGBT. Em azul, no canal 2, é mostrada a tensão de barramento, enquanto no canal 3, em rosa, mostra-se o sinal que vai para o conversor AD de tensão:
@@ -86,6 +86,7 @@ Em amarelo, no canal 1, é mostrado o sinal de controle. O ciclo de trabalho de 
 
 
 \section{Medições de parâmetros}
+\label{sec:mesaures}
 Para comparar o desempenho do circuito desenvolvido com uma fonte ferrorressonante tradicional, foram medidos três parâmetros essenciais para se possibilitar uma discussão válida sobre o tema: eficiência, fator de potência e dimensões físicas, incluindo massa, altura, largura e comprimento. 
 
 \subsection{Eficiência}
@@ -98,8 +99,8 @@ Inicialmente mediu-se a temperatura da água no recipiente, utilizando-se um ter
     \begin{tabular}{|l|l|l|l|l|l|l|l|l|} 
 	\hline
 	$T_i$ (ºC) &$T_f$ (ºC)	&$T_\mathrm{amb}$ (ºC)	 &$t_\mathrm{total}$ (s)	&$t_\mathrm{aq}$ (s)	 &$t_\mathrm{total}$  -  $t_\mathrm{aq}$	&$P$ (W)	&$W_\mathrm{in}$ (Wh)	&$\eta$ (\%)\\\hline	
-	18	&7	&19	&65	&4	&61	&749,623	&28	&45,36\\\hline	
-	33	&22	&20	&75	&4	&71	&709,113	&31	&45,11\\\hline
+	7	&18	&19	&65	&4	&61	&749,623	&28	&45,36\\\hline	
+	22	&33	&20	&75	&4	&71	&709,113	&31	&45,11\\\hline
     \end{tabular}
     \label{table-eff}
 \end{table}
@@ -109,7 +110,7 @@ Da tabela \ref{table-eff}, percebe-se que o valor da eficiência obtida pelos ex
 
 \subsection{Fator de Potência}
 
-Na medição o fator de potência,  utilizou-se o mesmo dispositivo usado para medir a potência mostrado na figura k. O circuito foi ligado em diversas configurações de potência, medindo-se o fator de potência com o mesmo dispositivo usando na figura \ref{fig:figura-medida_potencia_full} de cada configuração em um minuto de aquecimento. A tabela abaixo contém os resultados obtidos:
+Neste ensaio, o circuito foi ligado em diversas configurações de potência, medindo-se o fator de potência com o mesmo dispositivo usando na figura \ref{fig:figura-medida_potencia_full}. Em cada configuração utilizada, foi realizado um minuto de aquecimento. A tabela abaixo contém os resultados obtidos:
 
 \begin{table}[H]
     \centering
@@ -135,26 +136,24 @@ Por último, as dimensões físicas da placa foram medidas, com uma régua milim
 
 \bigskip
 \begin{itemize}
-    \item Comprimento: x cm;
-    \item Largura: y cm;
-    \item Altura: y cm;
-    \item Peso: p g.
+    \item Comprimento: 18 cm;
+    \item Largura: 14,5 cm;
+    \item Altura: 6 cm;
+    \item Peso: 730 g.
 \end{itemize}
 \bigskip
 
 \section{Comparativo com Circuito Ferrorressonante}
 
-Para fazer a comparação, foram levantados dados de um circuito ferrorressonante tradicional contido em um modelo de forno do final da década de 1990 (cite).  A lista abaixo mostra os mesmos parâmetros utilizados na avaliação do projeto medidos neste circuito: 
+Para fazer a comparação, foram levantados dados do circuito ferrorressonante original deste modelo de micoondas Panasonic. Os ensaios da seção \ref{sec:mesaures} foram repetidos em condições semelhantes para este circuito.  A lista abaixo mostra os mesmos parâmetros utilizados na avaliação do projeto medidos neste circuito: 
 
 \bigskip
 \begin{itemize}
-    \item Comprimento: x cm;
-    \item Largura: y cm;
-    \item Altura: y cm;
-    \item Peso: p g.
-    \item Fator de potência: 0,xx
-    \item Eficiência: k\%
+    \item Altura: 10 cm;
+    \item Peso: 4250 g;
+    \item Fator de potência: 0,88;
+    \item Eficiência: 43\%.
 \end{itemize}
 \bigskip
 
- Comparando-se os valores dos parâmetros do circuito ferrorressonante com os valores obtidos no projeto, percebe-se como a placa desenvolvida apresenta desempenho superior em todos eles. Com altura e peso consideravelmente menores, o circuito desenvolvido é mais flexível, permitindo o uso em diferentes aparelhos, otimizando o espaço disponível e reduzindo o peso total. O projeto também apresentou maior fator de potência e eficiência, aproveitando melhor a energia da rede, causando menos impactos, e reduzindo o consumo total, convertendo maior quantidade de energia em calor.
+Deve-se frisar que, além das condições prejudiciais à precisão do experimento já citadas, o circuito ferrorressonante não se encontrava na melhor condição, devido ao uso e a  o que pode afetar seus parâmetros de forma negativa. No entanto, ainda pode-se afirmar que para os fins deste trabalho a comparação feita aqui é válida. Comparando-se os valores dos parâmetros do circuito ferrorressonante com os valores obtidos no projeto, percebe-se como a placa desenvolvida apresenta desempenho superior em todos eles. Com altura e peso consideravelmente menores, o circuito desenvolvido é mais flexível, permitindo o uso em diferentes aparelhos, otimizando o espaço disponível e reduzindo o peso total. O projeto também apresentou um fator de potência consideravelmente maior. A eficiência foi levemente superior, o que é de se chamar atenção dado que o circuito ferrorressonante original possui componentes que em geral são mais caros. O circuito desenvolvido é melhor aproveitando a energia da rede, causando menos impactos, e reduzindo o consumo total, convertendo maior quantidade de energia em calor.
