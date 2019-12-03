@@ -314,7 +314,7 @@
 \makeatletter
 \renewcommand{\folhaderostocontent}
 {%
-    \setcounter{page}{2}
+    \setcounter{page}{1}
     \begin{center}
         \large\MakeUppercase{\imprimirautor}\\
     \end{center}

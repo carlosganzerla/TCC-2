@@ -29,12 +29,16 @@
 % INSERE CAPA E FOLHA DE ROSTO
 \input{estrutura/pre-textuais/capa}
 \input{estrutura/pre-textuais/folha-rosto}
+\input{estrutura/pre-textuais/folha-aprovacao}
 
 \begin{document}
 
 \pretextual
 \imprimircapa                                               	           % Comando para imprimir Capa
-\imprimirfolhaderosto{}                                     		   % Comando para imprimir Folha de rosto
+\imprimirfolhaderosto
+%\imprimirfolhadeaprovacao
+
+% Comando para imprimir Folha de rosto
 % INSERE ELEMENTOS PRÉ-TEXTUAIS
 %\include{estrutura/pre-textuais/dedicatoria}          			   % Dedicatória
 \input{estrutura/pre-textuais/agradecimentos}        			   % Agradecimentos
